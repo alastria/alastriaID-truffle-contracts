@@ -1,0 +1,25 @@
+{
+  "name": "alastria-identity",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/truffle test",
+    "coverage": "./scripts/coverage-verify.sh 100",
+    "compile": "./node_modules/.bin/truffle compile",
+    "migrateToRedT": "./node_modules/.bin/truffle migrate --f 1 --to 2 --network=red-t",
+    "migrateLocal": "./node_modules/.bin/truffle migrate --network=development",
+    "migrateLocalAdmin": "./node_modules/.bin/truffle migrate --network=local-admin",
+    "lint": "./node_modules/.bin/solium -d contracts/"
+  },
+  "author": "Alastria",
+  "license": "MIT",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.1.1",
+    "keythereum": "^1.2.0",
+    "truffle-wallet-provider": "0.0.5"
+  }
+}

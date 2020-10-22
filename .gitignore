@@ -1,0 +1,8 @@
+# Logs
+*.log
+
+# Node modules
+node_modules/
+
+#Truffle binary
+build/
