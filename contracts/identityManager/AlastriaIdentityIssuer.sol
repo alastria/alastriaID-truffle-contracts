@@ -28,8 +28,8 @@ contract AlastriaIdentityIssuer {
         _;
     }
 
-    constructor () public {
-	    IdentityIssuer storage identityIssuer = issuers[msg.sender];
+    function _initialize(address _firstIdentity) internal {
+	    IdentityIssuer storage identityIssuer = issuers[_firstIdentity];
         identityIssuer.level = Eidas.EidasLevel.High;
         identityIssuer.active = true;
     }

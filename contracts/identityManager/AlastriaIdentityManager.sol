@@ -42,11 +42,15 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
     }
 
     //Constructor
-    function initialize (address _credentialRegistry, address _publicKeyRegistry, address _presentationRegistry) public initializer {
+    function initialize (address _credentialRegistry, address _publicKeyRegistry, address _presentationRegistry, address _firstIdentityWallet) public initializer {
         //TODO require(_version > getPreviousVersion(_previousVersion));
         alastriaCredentialRegistry = AlastriaCredentialRegistry(_credentialRegistry);
         alastriaPresentationRegistry = AlastriaPresentationRegistry(_presentationRegistry);
         alastriaPublicKeyRegistry = AlastriaPublicKeyRegistry(_publicKeyRegistry);
+        AlastriaProxy identity = new AlastriaProxy();
+        identityKeys[_firstIdentityWallet] = address(identity);
+        AlastriaIdentityServiceProvider._initialize(address(identity));
+        AlastriaIdentityIssuer._initialize(address(identity));
     }
 
     //Methods
@@ -75,16 +79,5 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
         identityKeys[newAccount] = identityKeys[accountLost];
         identityKeys[accountLost] = address(0);
         emit IdentityRecovered(accountLost,newAccount,msg.sender);
-    }
-
-    //Internals TODO: warning recommending change visibility to pure
-    //Checks that address a is the first input in msg.data.
-    //Has very minimal gas overhead.
-    function checkMessageData(address a) internal pure returns (bool t) {
-        if (msg.data.length < 36) return false;
-        assembly {
-            let mask := 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            t := eq(a, and(mask, calldataload(4)))
-        }
     }
 }

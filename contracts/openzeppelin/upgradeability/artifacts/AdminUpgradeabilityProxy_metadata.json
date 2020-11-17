@@ -1,0 +1,249 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_logic",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_admin",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "previousAdmin",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "AdminChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "implementation",
+						"type": "address"
+					}
+				],
+				"name": "Upgraded",
+				"type": "event"
+			},
+			{
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "fallback"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "admin",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newAdmin",
+						"type": "address"
+					}
+				],
+				"name": "changeAdmin",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "implementation",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newImplementation",
+						"type": "address"
+					}
+				],
+				"name": "upgradeTo",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newImplementation",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "data",
+						"type": "bytes"
+					}
+				],
+				"name": "upgradeToAndCall",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"details": "Extends from BaseAdminUpgradeabilityProxy with a constructor for  initializing the implementation, admin, and init data.",
+			"methods": {
+				"admin()": {
+					"return": "The address of the proxy admin."
+				},
+				"changeAdmin(address)": {
+					"details": "Changes the admin of the proxy. Only the current admin can call this function.",
+					"params": {
+						"newAdmin": "Address to transfer proxy administration to."
+					}
+				},
+				"constructor": {
+					"params": {
+						"_admin": "Address of the proxy administrator.",
+						"_data": "Data to send as msg.data to the implementation to initialize the proxied contract. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding. This parameter is optional, if no data is given the initialization call to proxied contract will be skipped.",
+						"_logic": "address of the initial implementation."
+					}
+				},
+				"implementation()": {
+					"return": "The address of the implementation."
+				},
+				"upgradeTo(address)": {
+					"details": "Upgrade the backing implementation of the proxy. Only the admin can call this function.",
+					"params": {
+						"newImplementation": "Address of the new implementation."
+					}
+				},
+				"upgradeToAndCall(address,bytes)": {
+					"details": "Upgrade the backing implementation of the proxy and call a function on the new implementation. This is useful to initialize the proxied contract.",
+					"params": {
+						"data": "Data to send as msg.data in the low level call. It should include the signature and the parameters of the function to be called, as described in https://solidity.readthedocs.io/en/v0.4.24/abi-spec.html#function-selector-and-argument-encoding.",
+						"newImplementation": "Address of the new implementation."
+					}
+				}
+			},
+			"title": "AdminUpgradeabilityProxy"
+		},
+		"userdoc": {
+			"methods": {
+				"constructor": "Contract constructor."
+			}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/openzeppelin/upgradeability/AdminUpgradeabilityProxy.sol": "AdminUpgradeabilityProxy"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/openzeppelin/upgradeability/AdminUpgradeabilityProxy.sol": {
+			"keccak256": "0x70d12848059b72b0cd46601ce7c0616ac65687a152d592e64bc37bebaad46d6a",
+			"urls": [
+				"bzz-raw://b5213789554ea49d6a8036263c6f751b2822ad93b02d591d00de238eb666e592",
+				"dweb:/ipfs/QmWE3LyzxPM16K44XxJhTP3sEZr7K3KFsp29udyqq5Q6ZP"
+			]
+		},
+		"localhost/openzeppelin/upgradeability/BaseAdminUpgradeabilityProxy.sol": {
+			"keccak256": "0xb23bf996661492b1e7c85506210eaa3e560a6d25904f0e8f493714fc6506d6c4",
+			"urls": [
+				"bzz-raw://d6c2df21a164e23ab385587619dd38ed35d6bc9423941bdad8d3d9dec78b41e2",
+				"dweb:/ipfs/Qmaf6sdC95g1W5uqR5MyxfKBzFUucXj6E7M3s3Fo3rQ4Cc"
+			]
+		},
+		"localhost/openzeppelin/upgradeability/BaseUpgradeabilityProxy.sol": {
+			"keccak256": "0x7bd53324e84220bf0f417c3e5b58125ba0dd2e2db9daf2ef0f23a5707bbb5749",
+			"urls": [
+				"bzz-raw://6efbb54e388c23364db5d9f0312ca88c8df950dea71ccc2da53f3d3e2a9cac43",
+				"dweb:/ipfs/Qmeb73YjQeRJ7xa3AZvyizwugJBJNBSkVaJJiNKfX8ESe8"
+			]
+		},
+		"localhost/openzeppelin/upgradeability/Proxy.sol": {
+			"keccak256": "0x0363e86561ad9b203c87a39fac198b7e1c719d953e22f6d8adfaf68ac9f14b4a",
+			"urls": [
+				"bzz-raw://a2162da15f045ad9111b2028b82109e84dc07936324298848580bdedef70809f",
+				"dweb:/ipfs/QmauGmonxPQ1pWM3u9fhWKg64YSLF7xD8RWnne4SLRabMA"
+			]
+		},
+		"localhost/openzeppelin/upgradeability/UpgradeabilityProxy.sol": {
+			"keccak256": "0x4a54795d023536a672a5f993bd63f0db93e79afeb5a42408b83d8b0bd88a8051",
+			"urls": [
+				"bzz-raw://06d6a044832e5665d907dbfe87e7d50eda70c17af06150137a51f59420ec8d24",
+				"dweb:/ipfs/QmRuDDnLByGDvevGNxGcWnwEz7Krf5VcxUYeJS17RQgm6N"
+			]
+		},
+		"localhost/openzeppelin/utils/Address.sol": {
+			"keccak256": "0x3000bb742b856036a3509b70de6dcac636f9bda38f019659143c8e15e0027c73",
+			"urls": [
+				"bzz-raw://122a887ed64c79f64d4601022525ee98c7423d668d701cae6fd14f8623cfc21d",
+				"dweb:/ipfs/QmVwBdUXrDGL3JDfJnwxj8fsdJntr5WrsgUf3tPT6GvUsu"
+			]
+		}
+	},
+	"version": 1
+}

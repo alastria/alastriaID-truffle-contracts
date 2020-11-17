@@ -18,9 +18,8 @@ contract AlastriaIdentityServiceProvider {
         _;
     }
 
-    constructor () public {
-
-        providers[msg.sender] = true;
+    function _initialize(address _firstIdentity) internal {
+        providers[_firstIdentity] = true;
     }
 
     function addIdentityServiceProvider(address _identityServiceProvider) public onlyIdentityServiceProvider(msg.sender) notIdentityServiceProvider(_identityServiceProvider) {

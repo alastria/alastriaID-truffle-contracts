@@ -25,7 +25,9 @@ const keythereum = require('keythereum');
 // TODO: change to process.env
 const password = 'Passw0rd';
 const adminPath = './accounts/admin-6e3976aeaa3a59e4af51783cc46ee0ffabc5dc11';
-const adminKey = keythereum.recover(password, JSON.parse(fs.readFileSync(adminPath, 'utf8'))).toString('hex')
+const firstId = './accounts/serviceProvider-643266eb3105f4bf8b4f4fec50886e453f0da9ad'
+const adminKey = keythereum.recover(password, JSON.parse(fs.readFileSync(adminPath, 'utf8'))).toString('hex');
+const firstIdKey = keythereum.recover(password, JSON.parse(fs.readFileSync(firstId, 'utf8'))).toString('hex');
 
 module.exports = {
   /**
@@ -41,7 +43,7 @@ module.exports = {
   networks: {
     // Local development network, usually Ganache
     'development': {
-      host: "localhost",
+      host: "localhost:8545",
       port: 8545,
       network_id: "*"
     },
@@ -54,19 +56,19 @@ module.exports = {
       gasPrice: 0x0,
       from: "0x6e3976aeaa3a59e4af51783cc46ee0ffabc5dc11"
     },
-    // Alastria red B connection, should be through Besu Signer
-    'red-b': {
-      host: "", //identiy node
-      port: 22000,
-      network_id: "*",
-      gas: 0xffffff,
-      gasPrice: 0x0,
-      from: "0xd65616c46a2e55957aff33e238b31bc568358e20"
-    },
     // Local with provider
     'local-admin': {
+      gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider("squirrel defense blanket file normal volcano attitude mutual phone indicate scene fault", "http://127.0.0.1:8545");
+        return new HDWalletProvider(adminKey, "http://127.0.0.1:8545");
+      },
+      network_id: "*",
+    },
+    // Local with provider
+    'local-first-id': {
+      gasPrice: 0x0,
+      provider: () => {
+        return new HDWalletProvider(firstIdKey, "http://127.0.0.1:8545");
       },
       network_id: "*",
     },
@@ -77,14 +79,29 @@ module.exports = {
       },
       network_id: "*",
     },
+    // Alastria red T connection with provider
+    'red-t-first-id': {
+      gasPrice: 0x0,
+      provider: () => {
+        return new HDWalletProvider(firstIdKey, "http://35.181.78.28:22000");
+      },
+      network_id: "*",
+    },
     // Alastria reb B connection with provider
     'red-b-identity-admin': {
       provider: () => {
         return new HDWalletProvider(adminKey, "");
       },
       network_id: "*",
+    },
+    // Alastria red T connection with provider
+    'red-b-first-id': {
+      gasPrice: 0x0,
+      provider: () => {
+        return new HDWalletProvider(firstIdKey, "");
+      },
+      network_id: "*",
     }
-
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -107,6 +124,17 @@ module.exports = {
   },
 
   env: {
-
+    firstIdentityWallet: "0x643266eb3105f4bf8b4f4fec50886e453f0da9ad",
+    adminAccount: "0x6e3976aeaa3A59E4AF51783CC46EE0fFabC5DC11",
+    contractInfoPath: "./address.md",
+    addressPosition: 2,
+    manager: "AlastriaIdentityManager",
+    identityEntity: "AlastriaIdentityEntity",
+    presentation: "AlastriaPresentationRegistry",
+    credential: "AlastriaCredentialRegistry",
+    publicKey: "AlastriaPublicKeyRegistry",
+    serviceProvider: "AlastriaServiceProvider",
+    identityIssuer: "AlastriaIdentityIssuer",
+    eidas: "Eidas"
   }
 }

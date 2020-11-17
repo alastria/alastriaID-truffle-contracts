@@ -10,16 +10,24 @@
     "test": "./node_modules/.bin/truffle test",
     "coverage": "./scripts/coverage-verify.sh 100",
     "compile": "./node_modules/.bin/truffle compile",
-    "migrateToRedT": "./node_modules/.bin/truffle migrate --f 1 --to 2 --network=red-t",
-    "migrateLocal": "./node_modules/.bin/truffle migrate --network=development",
-    "migrateLocalAdmin": "./node_modules/.bin/truffle migrate --network=local-admin",
-    "lint": "./node_modules/.bin/solium -d contracts/"
+    "migrateToRedT": "./node_modules/.bin/truffle migrate --f 1 --to 3 --network=red-t",
+    "initRedT": "./node_modules/.bin/truffle exec ./migrations/4_initialize_contracts.js --network=red-t-first-id",
+    "updateRedT": "./node_modules/.bin/truffle migrate --f 5 --to 5 --network=red-t",
+    "migrateToRedB": "./node_modules/.bin/truffle migrate --f 1 --to 3 --network=red-b",
+    "initRedB": "./node_modules/.bin/truffle exec ./migrations/4_initialize_contracts.js --network=red-b-first-id",
+    "updateRedB": "./node_modules/.bin/truffle migrate --f 5 --to 5 --network=red-b",
+    "migrateLocal": "./node_modules/.bin/truffle migrate --f 1 --to 3 --network=local-admin",
+    "initLocal": "./node_modules/.bin/truffle exec ./migrations/4_initialize_contracts.js --network=local-first-id",
+    "updateLocal": "./node_modules/.bin/truffle migrate --f 5 --to 5 --network=local-admin",
+    "lint": "./node_modules/.bin/solium -d contracts/",
+    "remixd": "./node_modules/.bin/remixd -s $(pwd)/contracts --remix-ide https://remix.ethereum.org"
   },
   "author": "Alastria",
   "license": "MIT",
   "dependencies": {
+    "@truffle/config": "^1.2.33",
     "@truffle/hdwallet-provider": "^1.1.1",
     "keythereum": "^1.2.0",
-    "truffle-wallet-provider": "0.0.5"
+    "remixd": "^0.2.4-alpha.0"
   }
 }

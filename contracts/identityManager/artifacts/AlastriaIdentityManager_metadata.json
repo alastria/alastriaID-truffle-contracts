@@ -1,0 +1,600 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "identity",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "owner",
+						"type": "address"
+					}
+				],
+				"name": "IdentityCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "oldAccount",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "newAccount",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "serviceProvider",
+						"type": "address"
+					}
+				],
+				"name": "IdentityRecovered",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "string",
+						"name": "method",
+						"type": "string"
+					}
+				],
+				"name": "OperationWasNotSupported",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "signAddress",
+						"type": "address"
+					}
+				],
+				"name": "PreparedAlastriaID",
+				"type": "event"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityIssuer",
+						"type": "address"
+					},
+					{
+						"internalType": "enum Eidas.EidasLevel",
+						"name": "_level",
+						"type": "uint8"
+					}
+				],
+				"name": "addIdentityIssuer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityServiceProvider",
+						"type": "address"
+					}
+				],
+				"name": "addIdentityServiceProvider",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "alastriaCredentialRegistry",
+				"outputs": [
+					{
+						"internalType": "contract AlastriaCredentialRegistry",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "alastriaPresentationRegistry",
+				"outputs": [
+					{
+						"internalType": "contract AlastriaPresentationRegistry",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "alastriaPublicKeyRegistry",
+				"outputs": [
+					{
+						"internalType": "contract AlastriaPublicKeyRegistry",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "bytes",
+						"name": "addPublicKeyCallData",
+						"type": "bytes"
+					}
+				],
+				"name": "createAlastriaIdentity",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_destination",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_value",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "_data",
+						"type": "bytes"
+					}
+				],
+				"name": "delegateCall",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityIssuer",
+						"type": "address"
+					}
+				],
+				"name": "deleteIdentityIssuer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityServiceProvider",
+						"type": "address"
+					}
+				],
+				"name": "deleteIdentityServiceProvider",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityIssuer",
+						"type": "address"
+					}
+				],
+				"name": "getEidasLevel",
+				"outputs": [
+					{
+						"internalType": "enum Eidas.EidasLevel",
+						"name": "",
+						"type": "uint8"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "identityKeys",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_credentialRegistry",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_publicKeyRegistry",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_presentationRegistry",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_firstIdentityWallet",
+						"type": "address"
+					}
+				],
+				"name": "initialize",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityIssuer",
+						"type": "address"
+					}
+				],
+				"name": "isIdentityIssuer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityServiceProvider",
+						"type": "address"
+					}
+				],
+				"name": "isIdentityServiceProvider",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "addr",
+						"type": "address"
+					}
+				],
+				"name": "isOwner",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "pendingIDs",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_signAddress",
+						"type": "address"
+					}
+				],
+				"name": "prepareAlastriaID",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "accountLost",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "newAccount",
+						"type": "address"
+					}
+				],
+				"name": "recoverAccount",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transfer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_identityIssuer",
+						"type": "address"
+					},
+					{
+						"internalType": "enum Eidas.EidasLevel",
+						"name": "_level",
+						"type": "uint8"
+					}
+				],
+				"name": "updateIdentityIssuerEidasLevel",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "version",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {
+				"createAlastriaIdentity(bytes)": {
+					"details": "Creates a new AlastriaProxy contract for an owner and recovery and allows an initial forward call which would be to set the registry in our case",
+					"params": {
+						"addPublicKeyCallData": "of the call to addKey function in AlastriaPublicKeyRegistry from the new deployed AlastriaProxy contract"
+					}
+				},
+				"delegateCall(address,uint256,bytes)": {
+					"details": "This method send a transaction trough the proxy of the sender"
+				}
+			}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"localhost/identityManager/AlastriaIdentityManager.sol": "AlastriaIdentityManager"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"localhost/identityManager/AlastriaIdentityEntity.sol": {
+			"keccak256": "0xd1173a5a4d06e8cd1c128dfe062e43fcf650c3750bd91c8d85eb7d4b8cf4274f",
+			"urls": [
+				"bzz-raw://ab16df83fe287ec3afecf1cea0e9f54f0ef556d26fc551aab6c7f4ddc3f195d3",
+				"dweb:/ipfs/QmTub7xioQArfCMq1eV8gobArAnWDaQLvLAGNDCudTLmhR"
+			]
+		},
+		"localhost/identityManager/AlastriaIdentityIssuer.sol": {
+			"keccak256": "0x0a9e14ffb8c66ec950dff52fca90d14c9d0f67064abeabf2d8d4bcd7bb4d3c32",
+			"urls": [
+				"bzz-raw://91fa104e445f0d1e930e805e06ac3337e7ae3245671ad59836daea9d18c621fa",
+				"dweb:/ipfs/QmNZo99uFcHrcsGjYSFQ4eKeUWXLq6owdHPMsW9tSu5R24"
+			]
+		},
+		"localhost/identityManager/AlastriaIdentityManager.sol": {
+			"keccak256": "0xcebde63c6eb3f68977b1f95b4ec7183799107b442e515f36d8c1129b96779b9c",
+			"urls": [
+				"bzz-raw://9d4f18e7dbb7d698e03d595986c3ca82d55245ea37e601dc3242277db235cd1d",
+				"dweb:/ipfs/QmcsG5dc2JhZY1V1EoXwLsqtoNZTUwQJV8wowLzBomApeS"
+			]
+		},
+		"localhost/identityManager/AlastriaIdentityServiceProvider.sol": {
+			"keccak256": "0x317a56ae231534b2046ea1f3a74ff9d780da3967e4735ded4d85b51528d23440",
+			"urls": [
+				"bzz-raw://25239bc7981a69141811cf19ba1a7582ba0041dc3acf2831f2104401f2eba61b",
+				"dweb:/ipfs/QmbEnfGyK8igSJV7ra9atg7V2g55EKr3wjTzf77fUW4ZSv"
+			]
+		},
+		"localhost/identityManager/AlastriaProxy.sol": {
+			"keccak256": "0x08b600a597f52fe1ec7176344c0c35e058b451efeb936912c46887aab0fb3674",
+			"urls": [
+				"bzz-raw://67b5219d2e76d246ec76fb4760609f20ad9601a0275b2601fb566b9d37771721",
+				"dweb:/ipfs/QmQWaEpXxMPinQ6Q4nkK313dD19k56E3TBGMQBZWJR65Wh"
+			]
+		},
+		"localhost/libs/Eidas.sol": {
+			"keccak256": "0x16e45031d65c5b0634dfc8202d62b4a47a9bdfbba8c3c9168940ccdbbada3b80",
+			"urls": [
+				"bzz-raw://4f3bad8027241f4129e9e3906c57ee966aac2c7a2b59f71bc7ccc5bc83eb1213",
+				"dweb:/ipfs/QmeLgD2azybRekL6GGYmRuZVP1byfpoESgx8XzukLyPcA1"
+			]
+		},
+		"localhost/libs/Owned.sol": {
+			"keccak256": "0x496def61b088c6889fb26adcdca3791f85798cfdad14320d16ee8ce50d298f7c",
+			"urls": [
+				"bzz-raw://c7deeb25278d017231d0c49fc3cc347f9cbeeb0d920cacd818ce3e390b4f1e14",
+				"dweb:/ipfs/QmUL1ryLa8fGk5ZZ98ucAkGkhxWstnqKdzJUVGiXWkEEWy"
+			]
+		},
+		"localhost/openzeppelin/Initializable.sol": {
+			"keccak256": "0x9bfec92e36234ecc99b5d37230acb6cd1f99560233753162204104a4897e8721",
+			"urls": [
+				"bzz-raw://5cf7c208583d4d046d75bd99f5507412ab01cce9dd9f802ce9768a416d93ea2f",
+				"dweb:/ipfs/QmcQS1BBMPpVEkXP3qzwSjxHNrqDek8YeR7xbVWDC9ApC7"
+			]
+		},
+		"localhost/registry/AlastriaCredentialRegistry.sol": {
+			"keccak256": "0x321b1d4c455e8e5114f21a7426a0be2a3139b40b47078e9d836d8d9f8b4c15d4",
+			"urls": [
+				"bzz-raw://d6ac0b652cfc0cf3ea82b0a37f1e378ef54a511e3c5b60d0e22e3adfdf480416",
+				"dweb:/ipfs/QmPCBHoyKXb9Fc6jboPxVF8tGUDH9mq4GQVCuV8XWjdmT1"
+			]
+		},
+		"localhost/registry/AlastriaPresentationRegistry.sol": {
+			"keccak256": "0xfcd99c16518aa03d3b393e45f297ec2ad2d2c17789d3b65dd170d9b361d6b55c",
+			"urls": [
+				"bzz-raw://80f83be6f6e10d74f6f16cb396d06bb96ec2cc3ae73b8a9d97d754cb44124c8c",
+				"dweb:/ipfs/QmXagnxHhgNjJb4KuHhWRXBP3P2gKFU2qPHAXsYuyzEjLJ"
+			]
+		},
+		"localhost/registry/AlastriaPublicKeyRegistry.sol": {
+			"keccak256": "0x0452653b9e100681077d2ff9f98319897dad25186fd9bd932a21d88504d567a9",
+			"urls": [
+				"bzz-raw://0cab7e511688590e5a04881325a247d1a4aab5dba928aff1df15c9b84e0fa6b8",
+				"dweb:/ipfs/QmT4VesDhhDkVrBhjkHiwhhrbyh2eTFbkK3Q2gqqRL5fzW"
+			]
+		}
+	},
+	"version": 1
+}

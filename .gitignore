@@ -6,3 +6,6 @@ node_modules/
 
 #Truffle binary
 build/
+
+#Package-lock
+package-lock.json
