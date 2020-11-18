@@ -76,7 +76,7 @@ module.exports = {
     'red-t-identity-admin': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(adminKey, "http://63.33.203.11/rpc");
+        return new HDWalletProvider(adminKey, "http://63.33.206.11/rpc");
       },
       network_id: "*",
     },
@@ -84,7 +84,7 @@ module.exports = {
     'red-t-first-id': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(firstIdKey, "http://http://63.33.203.11/rp");
+        return new HDWalletProvider(firstIdKey, "http://63.33.206.11/rpc");
       },
       network_id: "*",
     },
