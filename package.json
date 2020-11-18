@@ -10,7 +10,7 @@
     "test": "./node_modules/.bin/truffle test",
     "coverage": "./scripts/coverage-verify.sh 100",
     "compile": "./node_modules/.bin/truffle compile",
-    "migrateToRedT": "./node_modules/.bin/truffle migrate --f 1 --to 3 --network=red-t",
+    "migrateToRedT": "./node_modules/.bin/truffle migrate --f 1 --to 3 --network=red-t-identity-admin",
     "initRedT": "./node_modules/.bin/truffle exec ./migrations/4_initialize_contracts.js --network=red-t-first-id",
     "updateRedT": "./node_modules/.bin/truffle migrate --f 5 --to 5 --network=red-t",
     "migrateToRedB": "./node_modules/.bin/truffle migrate --f 1 --to 3 --network=red-b",
@@ -28,6 +28,7 @@
     "@truffle/config": "^1.2.33",
     "@truffle/hdwallet-provider": "^1.1.1",
     "keythereum": "^1.2.0",
-    "remixd": "^0.2.4-alpha.0"
+    "remixd": "^0.2.4-alpha.0",
+    "truffle": "^5.1.53"
   }
 }
