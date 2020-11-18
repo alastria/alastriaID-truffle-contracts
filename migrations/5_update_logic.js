@@ -1,12 +1,18 @@
 const fs = require('fs')
 const TruffleConfig = require('@truffle/config');
-const Proxy = artifacts.require('./contracts/openzeppelin/upgradeability/AdminUpgradeabilityProxy.sol')
 
-module.exports = async function(deployer) {
+const Proxy = artifacts.require('./contracts/openzeppelin/upgradeability/AdminUpgradeabilityProxy.sol');
+const Eidas = artifacts.require('contracts/libs/Eidas.sol');
+const AlastriaIdentityManager = artifacts.require('contracts/identityManager/AlastriaIdentityManager.sol');
+const AlastriaCredentialRegistry = artifacts.require('contracts/registry/AlastriaCredentialRegistry.sol');
+const AlastriaPublicKeyRegistry = artifacts.require('contracts/registry/AlastriaPublicKeyRegistry.sol');
+const AlastriaPresentationRegistry = artifacts.require('contracts/registry/AlastriaPresentationRegistry.sol');
+
+
+module.exports = async function (deployer) {
   const config = TruffleConfig.detect().env;
   const addresses = JSON.parse(fs.readFileSync('./addresses.json'));
-
-  await deployer.link(Eidas, AlastriaIdentityIssuer);
+  //await deployer.link(Eidas, AlastriaIdentityIssuer);
   await deployer.link(Eidas, AlastriaIdentityManager);
 
   let proxyCredentialRegistry = await Proxy.at(addresses[config.credential]);
