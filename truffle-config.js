@@ -74,8 +74,9 @@ module.exports = {
     },
     // Alastria red T connection with provider
     'red-t-identity-admin': {
+      gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(adminKey, "http://35.181.78.28:22000");
+        return new HDWalletProvider(adminKey, "http://63.33.203.11/rpc");
       },
       network_id: "*",
     },
@@ -83,7 +84,7 @@ module.exports = {
     'red-t-first-id': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(firstIdKey, "http://35.181.78.28:22000");
+        return new HDWalletProvider(firstIdKey, "http://http://63.33.203.11/rp");
       },
       network_id: "*",
     },
