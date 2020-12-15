@@ -69,10 +69,15 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
     }
 
     /// @dev This method send a transaction trough the proxy of the sender
-    function delegateCall(address _destination, uint256 _value, bytes memory _data) public {
-        require(identityKeys[msg.sender]!=address(0));
+    function delegateCall(
+        address _destination,
+        uint256 _value,
+        bytes memory _data
+    ) public returns(bytes memory) {
+        require(identityKeys[msg.sender] != address(0));
         AlastriaProxy identity = AlastriaProxy(address(identityKeys[msg.sender]));
-        identity.forward(_destination,_value,_data);
+        bytes memory result = identity.forward(_destination, _value, _data);
+        return result;
     }
 
     function recoverAccount(address accountLost, address newAccount) public onlyIdentityIssuer(msg.sender) {
