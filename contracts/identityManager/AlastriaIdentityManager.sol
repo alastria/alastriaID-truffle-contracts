@@ -14,7 +14,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
 
     //Variables
     uint256 public version;
-    uint internal timeToLive = 10000;
+    uint256 constant internal timeToLive = 10000;
     AlastriaCredentialRegistry public alastriaCredentialRegistry;
     AlastriaPresentationRegistry public alastriaPresentationRegistry;
     AlastriaPublicKeyRegistry public alastriaPublicKeyRegistry;
@@ -32,7 +32,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
 
     //Modifiers
     modifier isPendingAndOnTime(address _signAddress) {
-        require(pendingIDs[_signAddress] > 0 && pendingIDs[_signAddress] > now);
+        require(pendingIDs[_signAddress] > 0 && pendingIDs[_signAddress] > block.timestamp);
         _;
     }
 
@@ -55,7 +55,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
 
     //Methods
     function prepareAlastriaID(address _signAddress) public onlyIdentityIssuer(msg.sender) {
-        pendingIDs[_signAddress] = now + timeToLive;
+        pendingIDs[_signAddress] = block.timestamp + timeToLive;
         emit PreparedAlastriaID(_signAddress);
     }
 
