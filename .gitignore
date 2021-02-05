@@ -1,11 +1,11 @@
-# Logs
-*.log
+# VS Code
+.vscode
 
-# Node modules
-node_modules/
+# node files
+node_modules
 
-#Truffle binary
-build/
-
-#Package-lock
-package-lock.json
+# Hardhat files
+cache
+## Should be in the repository for library developers??
+# artifacts
+# typechain

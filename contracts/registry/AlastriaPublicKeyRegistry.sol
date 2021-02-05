@@ -1,4 +1,5 @@
-pragma solidity 0.5.17;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.24 <0.8.0;
 
 import "../openzeppelin/Initializable.sol";
 
@@ -45,7 +46,7 @@ contract AlastriaPublicKeyRegistry is Initializable{
     // Sets new key and revokes previous
     function addKey(string memory publicKey) public {
         require(!publicKeyRegistry[msg.sender][getKeyHash(publicKey)].exists);
-        uint changeDate = now;
+        uint changeDate = block.timestamp;
         revokePublicKey(getCurrentPublicKey(msg.sender));
         publicKeyRegistry[msg.sender][getKeyHash(publicKey)] = PublicKey(
             true,
@@ -60,7 +61,7 @@ contract AlastriaPublicKeyRegistry is Initializable{
         PublicKey storage value = publicKeyRegistry[msg.sender][getKeyHash(publicKey)];
         // only existent no backtransition
         if (value.exists && value.status != Status.DeletedBySubject) {
-            value.endDate = now;
+            value.endDate = block.timestamp;
             emit PublicKeyRevoked(publicKey);
         }
     }
@@ -70,7 +71,7 @@ contract AlastriaPublicKeyRegistry is Initializable{
         // only existent
         if (value.exists) {
             value.status = Status.DeletedBySubject;
-            value.endDate = now;
+            value.endDate = block.timestamp;
             emit PublicKeyDeleted(publicKey);
         }
     }

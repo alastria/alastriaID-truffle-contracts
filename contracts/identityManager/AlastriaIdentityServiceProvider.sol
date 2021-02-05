@@ -1,8 +1,14 @@
-pragma solidity 0.5.17;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.24 <0.8.0;
 
 import "../libs/Eidas.sol";
+import "../openzeppelin/Initializable.sol";
 
-contract AlastriaIdentityServiceProvider {
+interface IAidServiceProvider {
+    function initialize(address _firstIdentity) external;
+}
+
+contract AlastriaIdentityServiceProvider is Initializable {
 
     using Eidas for Eidas.EidasLevel;
 
@@ -18,7 +24,7 @@ contract AlastriaIdentityServiceProvider {
         _;
     }
 
-    function _initialize(address _firstIdentity) internal {
+    function initialize(address _firstIdentity) public initializer {
         providers[_firstIdentity] = true;
     }
 
