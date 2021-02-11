@@ -5,12 +5,7 @@ import * as fs from "async-file";
 import { expect } from "chai";
 import { step } from "mocha-steps";
 import { callProxyBatch, deployAID, deployLibs, IAidTypes } from "../scripts/AlastriaID";
-import {
-  createWallet,
-  deploy,
-  provider,
-  TransactionResponse,
-} from "../scripts/Blockchain";
+import { createWallet, deploy, provider, TransactionResponse } from "../scripts/Blockchain";
 import { logObject } from "../scripts/Utils";
 
 // Typechain
@@ -82,7 +77,12 @@ describe("Deploy Alastria Identity Contracts", async function () {
       if (hardhatArguments.network == "hardhat") { DEPRECATED*/
       for (let index = 0; index < WALL_NUMBER; index++) {
         if (hardhatArguments.network != "hardhat") {
-          await provider.getSigner(index).unlock("");
+          const unlocked = await provider.getSigner(index).unlock("");
+          unlocked
+            ? console.log(`Account "${await provider.getSigner(index).getAddress()}" unlocked`)
+            : console.log(
+                `Account "${await provider.getSigner(index).getAddress()}" CANNOT be unlocked`
+              );
         }
         // Check if wallets has balance on this network
         if (

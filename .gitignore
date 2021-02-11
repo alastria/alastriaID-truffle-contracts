@@ -6,6 +6,7 @@ node_modules
 
 # Hardhat files
 cache
+test/data*
 ## Should be in the repository for library developers??
 # artifacts
 # typechain

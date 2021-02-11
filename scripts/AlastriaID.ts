@@ -59,9 +59,6 @@ export const deployAID = async (
     const factOpt: FactoryOptions = {
       signer: deployer,
     };
-    // ==> async
-    // Eidas library
-    const eidasInCase = deployLibs(deployer) as Promise<Eidas>;
 
     console.log(
       `Deploying Alastria Identity Smart Contracts on '${
@@ -82,10 +79,10 @@ export const deployAID = async (
       };
     } else {
       // eidas undefined, await for in case deployment
-      eidas = await eidasInCase;
+      eidas = await deployLibs(deployer) as Eidas;
       factOptLib = {
         libraries: {
-          Eidas: (await eidasInCase)!.address,
+          Eidas: eidas.address,
         },
         signer: deployer,
       };
@@ -145,7 +142,7 @@ export const deployAID = async (
       manager: aidContracts[6] as Manager,
     } as IAidTypes;
   } catch (error) {
-    console.error(`Cannot deploy manager. ${error.stack}`);
+    console.error(`Cannot deploy Alastria ID contracts. ${error.stack}`);
   }
 };
 
