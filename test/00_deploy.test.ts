@@ -61,6 +61,9 @@ describe("Deploy Alastria Identity Contracts", async function () {
 
     let wallet: Promise<Wallet | undefined>;
 
+    if (!(await fs.exists("./test/data"))) {
+      await fs.mkdir("./test/data");
+    }
     try {
       if (!(await fs.exists("./keystore"))) {
         await fs.mkdir("keystore");

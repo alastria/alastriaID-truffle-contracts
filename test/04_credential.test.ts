@@ -70,6 +70,9 @@ let subjectIdentifier: string;
 
 describe("05 - Credential ==> Warning WorkInProgress <==", async () => {
   before(`Get data from test ${PREV_TEST}`, async () => {
+    if (!(await fs.exists("./test/data"))) {
+      await fs.mkdir("./test/data");
+    }
     //const accounts = await ethers.getSigners();
     // Get data from JSON
     const prevData = JSON.parse(await fs.readFile(`./test/data/${PREV_TEST}.json`));
