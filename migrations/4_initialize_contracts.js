@@ -12,25 +12,25 @@ module.exports = async function(callback) {
   try {
     credentialRegistry = await AlastriaCredentialRegistry.at(addresses[config.credential])
     let tx = await credentialRegistry.initialize('0x0000000000000000000000000000000000000001')
-    console.log(`Credential registry initilized in ${tx.hash}`)
+    console.log(`Credential registry initilized in ${tx.receipt.transactionHash}`)
 
     presentationRegistry = await AlastriaPresentationRegistry.at(addresses[config.presentation])
     tx = await presentationRegistry.initialize('0x0000000000000000000000000000000000000001')
-    console.log(`Presentation registry initilized in ${tx.hash}`)
+    console.log(`Presentation registry initilized in ${tx.receipt.transactionHash}`)
 
     publicKeyRegistry = await AlastriaPublicKeyRegistry.at(addresses[config.publicKey])
     tx = await publicKeyRegistry.initialize('0x0000000000000000000000000000000000000001')
-    console.log(`Public key registry initilized in ${tx.hash}`)
+    console.log(`Public key registry initilized in ${tx.receipt.transactionHash}`)
 
     identityManager = await AlastriaIdentityManager.at(addresses[config.manager])
     tx = await identityManager.initialize(addresses[config.credential], addresses[config.publicKey], addresses[config.presentation], config.firstIdentityWallet)
-    console.log(`Identity manager initilized in ${tx.hash}`)
+    console.log(`Identity manager initilized in ${tx.receipt.transactionHash}`)
 
   } catch(err) {
-    console.log(err)
+    console.log("ERROR:", err)
     callback(err,null);
   }
 
   console.log('Contracts initialized');
-  callback(null,true);
+  callback(null);
 };
