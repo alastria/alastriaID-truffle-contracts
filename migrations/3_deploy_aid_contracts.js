@@ -43,9 +43,6 @@ async function saveAddresesInfo(address, contractName, network, config) {
 module.exports = async function(deployer, network, accounts) {
   const config = TruffleConfig.detect().env;
 
-  if (AlastriaIdentityManager.network_id === '19535753591') {
-    web3.personal.unlockAccount(web3.eth.accounts[0], 'Passw0rd');
-  }
   let eidas = await Eidas.deployed()
   await saveAddresesInfo(eidas.address, config.eidas, network, config)
   

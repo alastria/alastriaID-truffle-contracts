@@ -9,9 +9,6 @@ module.exports = async function(callback) {
   const addresses = JSON.parse(fs.readFileSync('./addresses.json'));
   const config = TruffleConfig.detect().env;
 
-  if (AlastriaIdentityManager.network_id === '19535753591') {
-    web3.personal.unlockAccount(web3.eth.accounts[1], 'Passw0rd');
-  }
   try {
     credentialRegistry = await AlastriaCredentialRegistry.at(addresses[config.credential])
     let tx = await credentialRegistry.initialize('0x0000000000000000000000000000000000000001')
@@ -26,7 +23,7 @@ module.exports = async function(callback) {
     console.log(`Public key registry initilized in ${tx.hash}`)
 
     identityManager = await AlastriaIdentityManager.at(addresses[config.manager])
-    tx = await identityManager.initialize(addresses[config.credential], addresses[config.presentation], addresses[config.publicKey], config.firstIdentityWallet)
+    tx = await identityManager.initialize(addresses[config.credential], addresses[config.publicKey], addresses[config.presentation], config.firstIdentityWallet)
     console.log(`Identity manager initilized in ${tx.hash}`)
 
   } catch(err) {
