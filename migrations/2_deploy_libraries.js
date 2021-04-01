@@ -1,6 +1,5 @@
-var Eidas = artifacts.require('contracts/libs/Eidas.sol');
+const Eidas = artifacts.require('contracts/libs/Eidas.sol');
 
-
-module.exports = function(deployer, network, accounts) {
+module.exports = function (deployer, _network, _accounts) {
   deployer.deploy(Eidas);
 };
