@@ -16,3 +16,10 @@ All contracts which are placed here are the following ones:
 |AlastriaIdentityServiceProvider.sol |It keeps a registry of the service providers identities |
 |AlastriaIdentityEntity.sol |It keeps a registry of the entities |
 
+### 2.- Registry
+
+|Contract |	What it does |
+| ------------- |:-------------:|
+|AlastriaCredentialRegistry.sol|	It manages all the credentials and keeps the registry and the status |
+|AlastriaPresentationRegistry.sol |	It manages all the presentations and keeps the registry and the status |
+|AlastriaPublicKeyRegistry.sol |	It manages all the public keys and keeps the registry |
