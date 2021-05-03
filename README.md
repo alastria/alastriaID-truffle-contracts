@@ -23,3 +23,13 @@ All contracts which are placed here are the following ones:
 |AlastriaCredentialRegistry.sol|	It manages all the credentials and keeps the registry and the status |
 |AlastriaPresentationRegistry.sol |	It manages all the presentations and keeps the registry and the status |
 |AlastriaPublicKeyRegistry.sol |	It manages all the public keys and keeps the registry |
+
+### 3.- Libs
+
+The previous contracts use some libraries which are:
+
+|Contract |	What it does |
+| ------------- |:-------------:|
+|Eidas.sol|	It manages Eidas level of assurance for credentials |
+|Owned.sol|	It assures that just the account which deployed a contract can update the version |
+
