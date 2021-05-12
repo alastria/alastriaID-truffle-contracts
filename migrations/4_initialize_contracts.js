@@ -4,6 +4,9 @@ const TruffleConfig = require('@truffle/config');
 const AlastriaIdentityManager = artifacts.require(
   'contracts/identityManager/AlastriaIdentityManager.sol'
 );
+const AlastriaIdentityEntity = artifacts.require(
+  'contracts/identityManager/AlastriaIdentityEntity.sol'
+);
 const AlastriaCredentialRegistry = artifacts.require(
   'contracts/registry/AlastriaCredentialRegistry.sol'
 );
@@ -59,6 +62,14 @@ module.exports = async function (callback) {
       config.firstIdentityWallet
     );
     console.log(`Identity manager initilized in ${tx.receipt.transactionHash}`);
+
+    identityEntity = await AlastriaIdentityEntity.at(
+      addresses[config.identityEntity]
+    );
+    tx = await identityEntity.initialize(
+      config.firstIdentityWallet
+    );
+    console.log(`Identity Entity initilized in ${tx.receipt.transactionHash}`);
   } catch (err) {
     console.log('ERROR:', err);
     callback(err, null);
