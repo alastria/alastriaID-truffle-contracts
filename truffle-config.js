@@ -76,7 +76,7 @@ module.exports = {
     // Alastria reb B connection with provider
     'red-b-identity-admin': {
       provider: () => {
-        return new HDWalletProvider(adminKey, "");
+        return new HDWalletProvider(adminKey, "http://63.33.206.111:8545");
       },
       network_id: "*",
     },
@@ -84,7 +84,7 @@ module.exports = {
     'red-b-first-id': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(firstIdKey, "");
+        return new HDWalletProvider(firstIdKey, "http://63.33.206.111:8545");
       },
       network_id: "*",
     }
