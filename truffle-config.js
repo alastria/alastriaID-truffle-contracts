@@ -41,21 +41,6 @@ module.exports = {
    */
 
   networks: {
-    // Local development network, usually Ganache
-    'development': {
-      host: "localhost:8545",
-      port: 8545,
-      network_id: "*"
-    },
-    // Alastria red T connection trough identity node
-    'red-t': {
-      host: "35.181.78.28", //identity node
-      port: 22000,
-      network_id: "*",
-      gas: 0xfffffff,
-      gasPrice: 0x0,
-      from: "0x6e3976aeaa3a59e4af51783cc46ee0ffabc5dc11"
-    },
     // Local with provider
     'local-admin': {
       gasPrice: 0x0,
