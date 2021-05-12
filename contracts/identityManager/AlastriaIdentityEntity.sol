@@ -1,10 +1,9 @@
 pragma solidity 0.5.17;
 
-import "../libs/Eidas.sol";
+import "../libs/Owned.sol";
+import "../openzeppelin/Initializable.sol";
 
-contract AlastriaIdentityEntity {
-
-    using Eidas for Eidas.EidasLevel;
+contract AlastriaIdentityEntity is Owned, Initializable{
 
     struct IdentityEntity {  
         string name;
@@ -28,9 +27,15 @@ contract AlastriaIdentityEntity {
         _;
     }
    
-    constructor () public {
-        IdentityEntity storage identityEntity = entities[msg.sender];
+    function initialize (address _firstIdentity) public initializer{
+        listEntities.push(_firstIdentity);
+        IdentityEntity storage identityEntity = entities[_firstIdentity];
 	    identityEntity.active = true;
+        identityEntity.cif = "firstIdentity-cif";
+        identityEntity.url_logo = "firstIdentity-url_logo";
+        identityEntity.url_createAID = "firstIdentity-url_createAID";
+        identityEntity.url_AOA = "firstIdentity-url_AOA";
+        identityEntity.name = "firstIdentity";
     }
     
 
