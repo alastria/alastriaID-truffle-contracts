@@ -2,15 +2,15 @@ pragma solidity 0.5.17;
 
 import "./AlastriaIdentityServiceProvider.sol";
 import "./AlastriaIdentityIssuer.sol";
-import "./AlastriaProxy.sol";
 import "./AlastriaIdentityEntity.sol";
+import "./AlastriaProxy.sol";
 import "../registry/AlastriaCredentialRegistry.sol";
 import "../registry/AlastriaPresentationRegistry.sol";
 import "../registry/AlastriaPublicKeyRegistry.sol";
 import "../libs/Owned.sol";
 import "../openzeppelin/Initializable.sol";
 
-contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIdentityIssuer, Owned, Initializable {
+contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIdentityIssuer, AlastriaIdentityEntity, Owned, Initializable {
 
     //Variables
     uint256 public version;
@@ -51,6 +51,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
         identityKeys[_firstIdentityWallet] = address(identity);
         AlastriaIdentityServiceProvider._initialize(address(identity));
         AlastriaIdentityIssuer._initialize(address(identity));
+        AlastriaIdentityEntity._initialize(address(identity));
     }
 
     //Methods

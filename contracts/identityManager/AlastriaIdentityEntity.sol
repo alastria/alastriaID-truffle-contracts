@@ -1,9 +1,7 @@
 pragma solidity 0.5.17;
 
-import "../libs/Owned.sol";
-import "../openzeppelin/Initializable.sol";
 
-contract AlastriaIdentityEntity is Owned, Initializable{
+contract AlastriaIdentityEntity{
 
     struct IdentityEntity {  
         string name;
@@ -27,7 +25,7 @@ contract AlastriaIdentityEntity is Owned, Initializable{
         _;
     }
    
-    function initialize (address _firstIdentity) public initializer{
+    function _initialize (address _firstIdentity) internal{
         listEntities.push(_firstIdentity);
         IdentityEntity storage identityEntity = entities[_firstIdentity];
 	    identityEntity.active = true;
