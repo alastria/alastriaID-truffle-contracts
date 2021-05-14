@@ -55,7 +55,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
         alastriaPublicKeyRegistry = AlastriaPublicKeyRegistry(_publicKeyRegistry);
         AlastriaProxy identity = new AlastriaProxy();
         identityKeys[_firstIdentityWallet] = address(identity);
-        firstIdentityWallet = _firstIdentityWallet;
+        firstIdentityWallet = address(identity);
         AlastriaIdentityServiceProvider._initialize(address(identity));
         AlastriaIdentityIssuer._initialize(address(identity));
     }
