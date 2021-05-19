@@ -59,6 +59,7 @@ module.exports = async function (callback) {
       config.firstIdentityWallet
     );
     console.log(`Identity manager initilized in ${tx.receipt.transactionHash}`);
+
   } catch (err) {
     console.log('ERROR:', err);
     callback(err, null);
