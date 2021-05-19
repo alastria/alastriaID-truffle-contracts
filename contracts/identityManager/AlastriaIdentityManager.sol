@@ -3,7 +3,6 @@ pragma solidity 0.5.17;
 import "./AlastriaIdentityServiceProvider.sol";
 import "./AlastriaIdentityIssuer.sol";
 import "./AlastriaProxy.sol";
-import "./AlastriaIdentityEntity.sol";
 import "../registry/AlastriaCredentialRegistry.sol";
 import "../registry/AlastriaPresentationRegistry.sol";
 import "../registry/AlastriaPublicKeyRegistry.sol";
@@ -18,7 +17,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
     AlastriaCredentialRegistry public alastriaCredentialRegistry;
     AlastriaPresentationRegistry public alastriaPresentationRegistry;
     AlastriaPublicKeyRegistry public alastriaPublicKeyRegistry;
-    address private firstIdentityWallet; 
+    address public firstIdentityWallet; 
     mapping(address => address) public identityKeys; //change to alastriaID created check bool
     mapping(address => uint) public pendingIDs;
 
