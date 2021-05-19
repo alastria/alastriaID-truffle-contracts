@@ -115,7 +115,7 @@ module.exports = {
     contractInfoPath: "./address.md",
     addressPosition: 2,
     manager: "AlastriaIdentityManager",
-    identityEntity: "AlastriaIdentityEntity",
+    nameService: "AlastriaNameService",
     presentation: "AlastriaPresentationRegistry",
     credential: "AlastriaCredentialRegistry",
     publicKey: "AlastriaPublicKeyRegistry",
