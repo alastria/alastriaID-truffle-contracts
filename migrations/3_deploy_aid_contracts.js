@@ -11,10 +11,6 @@ const AlastriaIdentityIssuer = artifacts.require(
 const Proxy = artifacts.require(
   './contracts/openzeppelin/upgradeability/AdminUpgradeabilityProxy.sol'
 );
-const AlastriaIdentityEntity = artifacts.require(
-  'contracts/identityManager/AlastriaIdentityEntity.sol'
-);
-
 const AlastriaIdentityManager = artifacts.require(
   'contracts/identityManager/AlastriaIdentityManager.sol'
 );
@@ -30,40 +26,19 @@ const AlastriaPublicKeyRegistry = artifacts.require(
 
 const addresses = {};
 
-async function saveAddresesInfo(address, contractName, network, config) {
+async function saveAddresesInfo(address, contractName, network) {
   if (network === 'development') {
     return;
   }
   addresses[contractName] = address;
   console.log(`${contractName} address info saved!`);
-  /*
-  const contractInfoHeaders = `| Contract Name | Address |\n| :------------ | :-------|\n`
-  const contracInfo = `| ${contractName} | ${address} |\n`
-  if (contractName == 'Eidas' || contractName == 'Owned') {
-    type = 'libs'
-  } else if (contractName === 'AlastriaCredentialRegistry'
-  || contractName === 'AlastriaPresentationRegistry'
-  || contractName === 'AlastriaPublicKeyRegistry') {
-    type = 'registry'
-  } else {
-    type = 'identityManager'
-  }
-  if (contractName == 'Eidas') {
-    await fs.writeFileSync(config.contractInfoPath, contractInfoHeaders)
-    await fs.appendFileSync(config.contractInfoPath, contracInfo)
-    console.log(`${contractName} address info saved!`)
-  } else {
-    await fs.appendFileSync(config.contractInfoPath, contracInfo)
-    console.log(`${contractName} address info saved!`)
-  }
-  */
 }
 
 module.exports = async function (deployer, network, accounts) {
   const config = TruffleConfig.detect().env;
 
   const eidas = await Eidas.deployed();
-  await saveAddresesInfo(eidas.address, config.eidas, network, config);
+  await saveAddresesInfo(eidas.address, config.eidas, network);
 
   await deployer.link(Eidas, AlastriaIdentityIssuer);
   await deployer.link(Eidas, AlastriaIdentityManager);
@@ -73,8 +48,7 @@ module.exports = async function (deployer, network, accounts) {
   await saveAddresesInfo(
     serviceProvider.address,
     config.serviceProvider,
-    network,
-    config
+    network
   );
 
   const identityIssuer = await AlastriaIdentityIssuer.new();
@@ -82,17 +56,7 @@ module.exports = async function (deployer, network, accounts) {
   await saveAddresesInfo(
     identityIssuer.address,
     config.identityIssuer,
-    network,
-    config
-  );
-
-  const identityEntity = await AlastriaIdentityEntity.new();
-  console.log('identityEntity deployed: ', identityEntity.address);
-  await saveAddresesInfo(
-    identityEntity.address,
-    config.identityEntity,
-    network,
-    config
+    network
   );
 
   const credentialRegistry = await AlastriaCredentialRegistry.new();
@@ -105,8 +69,7 @@ module.exports = async function (deployer, network, accounts) {
   await saveAddresesInfo(
     proxyCredentialRegistry.address,
     config.credential,
-    network,
-    config
+    network
   );
 
   const presentationRegistry = await AlastriaPresentationRegistry.new();
@@ -122,8 +85,7 @@ module.exports = async function (deployer, network, accounts) {
   await saveAddresesInfo(
     proxyPresentationRegistry.address,
     config.presentation,
-    network,
-    config
+    network
   );
 
   const publicKeyRegistry = await AlastriaPublicKeyRegistry.new();
@@ -136,8 +98,7 @@ module.exports = async function (deployer, network, accounts) {
   await saveAddresesInfo(
     proxyPublicKeyRegistry.address,
     config.publicKey,
-    network,
-    config
+    network
   );
 
   const identityManager = await AlastriaIdentityManager.new();
@@ -150,8 +111,7 @@ module.exports = async function (deployer, network, accounts) {
   await saveAddresesInfo(
     proxyIdentityManager.address,
     config.manager,
-    network,
-    config
+    network
   );
 
   await fs.writeFileSync('./addresses.json', JSON.stringify(addresses));
