@@ -9,9 +9,8 @@ const AlastriaIdentityManager = artifacts.require(
     'contracts/identityManager/AlastriaIdentityManager.sol'
 );
 
-const addressesPath = '../addresses.json';
-
-const addresses = JSON.parse(fs.readFileSync(addressesPath));
+const addressesPath = './addresses.json';
+let addresses;
 
 async function saveAddresesInfo(address, contractName, network) {
     if (network === 'development') {
@@ -23,6 +22,7 @@ async function saveAddresesInfo(address, contractName, network) {
 
 module.exports = async function (deployer, network, accounts) {
     const config = TruffleConfig.detect().env;
+    addresses = JSON.parse(fs.readFileSync(addressesPath));
 
     try{
         let identityManager = await AlastriaIdentityManager.at(
@@ -33,8 +33,8 @@ module.exports = async function (deployer, network, accounts) {
             {from: config.firstIdentityWallet});
 
         console.log('proxy first identity wallet:', proxyFirstIdentityWallet);
-
-        const nameService = await AlastriaNameService.new(proxyFirstIdentityWallet, {gas: 0});
+        
+        const nameService = await deployer.deploy(AlastriaNameService, proxyFirstIdentityWallet);
 
         console.log('nameService deployed: ', nameService.address);
         await saveAddresesInfo(
@@ -42,6 +42,7 @@ module.exports = async function (deployer, network, accounts) {
             config.nameService,
             network
         );
+
         await fs.writeFileSync(addressesPath, JSON.stringify(addresses));
     }
     catch (err) {
