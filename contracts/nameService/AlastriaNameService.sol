@@ -1,10 +1,7 @@
 pragma solidity 0.5.17;
 
-import "../libs/Eidas.sol";
 
-contract AlastriaIdentityEntity {
-
-    using Eidas for Eidas.EidasLevel;
+contract AlastriaNameService{
 
     struct IdentityEntity {  
         string name;
@@ -14,6 +11,14 @@ contract AlastriaIdentityEntity {
         string url_AOA;
         bool active;
     }
+
+    string public cif = "firstIdentity-cif";
+    string public url_logo = "firstIdentity-url_logo";
+    string public url_createAID = "firstIdentity-url_createAID";
+    string public url_AOA = "firstIdentity-url_AOA";
+    string public name = "firstidentity";
+    
+
 
     mapping(address => IdentityEntity) internal entities;
     address[] listEntities;
@@ -28,11 +33,10 @@ contract AlastriaIdentityEntity {
         _;
     }
    
-    constructor () public {
-        IdentityEntity storage identityEntity = entities[msg.sender];
-	    identityEntity.active = true;
+    constructor (address _firstIdentity) public{
+	    _addEntity(_firstIdentity, name, cif, url_logo, url_createAID, url_AOA, true);
+        
     }
-    
 
     /**
     * @dev function that allows you to add a entity to the entities mapping
@@ -44,14 +48,18 @@ contract AlastriaIdentityEntity {
     * @param _url_AOA the url that contains the AOA of the entity
     * @param _active a flag that shows if a entity is active or not
     */ 
-    function addEntity(address _addressEntity, string memory _name, string memory _cif, string memory _url_logo, string memory _url_createAID, string memory _url_AOA, bool _active) public notIdentityEntity(_addressEntity) onlyIdentityEntity(msg.sender) {
-         listEntities.push(_addressEntity);
-         entities[_addressEntity].name = _name;
-         entities[_addressEntity].cif = _cif;
-         entities[_addressEntity].url_logo = _url_logo;
-         entities[_addressEntity].url_createAID = _url_createAID;
-         entities[_addressEntity].url_AOA = _url_AOA;
-         entities[_addressEntity].active = _active;
+    function _addEntity(address _addressEntity, string memory _name, string memory _cif, string memory _url_logo, string memory _url_createAID, string memory _url_AOA, bool _active) internal {
+        listEntities.push(_addressEntity);
+        entities[_addressEntity].name = _name;
+        entities[_addressEntity].cif = _cif;
+        entities[_addressEntity].url_logo = _url_logo;
+        entities[_addressEntity].url_createAID = _url_createAID;
+        entities[_addressEntity].url_AOA = _url_AOA;
+        entities[_addressEntity].active = _active;
+    }
+
+    function addEntity(address _addressEntity, string memory _name, string memory _cif, string memory _url_logo, string memory _url_createAID, string memory _url_AOA) public notIdentityEntity(_addressEntity) onlyIdentityEntity(msg.sender) {
+        _addEntity(_addressEntity, _name, _cif, _url_logo, _url_createAID, _url_AOA, true);
     }
     
     /**

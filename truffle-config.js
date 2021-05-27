@@ -29,6 +29,10 @@ const firstId = './accounts/serviceProvider-643266eb3105f4bf8b4f4fec50886e453f0d
 const adminKey = keythereum.recover(password, JSON.parse(fs.readFileSync(adminPath, 'utf8'))).toString('hex');
 const firstIdKey = keythereum.recover(password, JSON.parse(fs.readFileSync(firstId, 'utf8'))).toString('hex');
 
+const bNetworkNode = "http://63.33.206.111:8545";
+const tNetworkNode = "http://63.33.206.111/rpc";
+const localNetworkNode = "http://127.0.0.1:8545";
+
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -41,26 +45,11 @@ module.exports = {
    */
 
   networks: {
-    // Local development network, usually Ganache
-    'development': {
-      host: "localhost:8545",
-      port: 8545,
-      network_id: "*"
-    },
-    // Alastria red T connection trough identity node
-    'red-t': {
-      host: "35.181.78.28", //identity node
-      port: 22000,
-      network_id: "*",
-      gas: 0xfffffff,
-      gasPrice: 0x0,
-      from: "0x6e3976aeaa3a59e4af51783cc46ee0ffabc5dc11"
-    },
     // Local with provider
     'local-admin': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(adminKey, "http://127.0.0.1:8545");
+        return new HDWalletProvider(adminKey, localNetworkNode);
       },
       network_id: "*",
     },
@@ -68,7 +57,7 @@ module.exports = {
     'local-first-id': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(firstIdKey, "http://127.0.0.1:8545");
+        return new HDWalletProvider(firstIdKey, localNetworkNode);
       },
       network_id: "*",
     },
@@ -76,7 +65,7 @@ module.exports = {
     'red-t-identity-admin': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(adminKey, "http://63.33.206.111/rpc");
+        return new HDWalletProvider(adminKey, tNetworkNode);
       },
       network_id: "*",
     },
@@ -84,14 +73,14 @@ module.exports = {
     'red-t-first-id': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(firstIdKey, "http://63.33.206.111/rpc");
+        return new HDWalletProvider(firstIdKey, tNetworkNode);
       },
       network_id: "*",
     },
     // Alastria reb B connection with provider
     'red-b-identity-admin': {
       provider: () => {
-        return new HDWalletProvider(adminKey, "");
+        return new HDWalletProvider(adminKey, bNetworkNode);
       },
       network_id: "*",
     },
@@ -99,7 +88,7 @@ module.exports = {
     'red-b-first-id': {
       gasPrice: 0x0,
       provider: () => {
-        return new HDWalletProvider(firstIdKey, "");
+        return new HDWalletProvider(firstIdKey, bNetworkNode);
       },
       network_id: "*",
     }
@@ -130,7 +119,7 @@ module.exports = {
     contractInfoPath: "./address.md",
     addressPosition: 2,
     manager: "AlastriaIdentityManager",
-    identityEntity: "AlastriaIdentityEntity",
+    nameService: "AlastriaNameService",
     presentation: "AlastriaPresentationRegistry",
     credential: "AlastriaCredentialRegistry",
     publicKey: "AlastriaPublicKeyRegistry",

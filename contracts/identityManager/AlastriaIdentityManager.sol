@@ -3,7 +3,6 @@ pragma solidity 0.5.17;
 import "./AlastriaIdentityServiceProvider.sol";
 import "./AlastriaIdentityIssuer.sol";
 import "./AlastriaProxy.sol";
-import "./AlastriaIdentityEntity.sol";
 import "../registry/AlastriaCredentialRegistry.sol";
 import "../registry/AlastriaPresentationRegistry.sol";
 import "../registry/AlastriaPublicKeyRegistry.sol";
@@ -18,6 +17,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
     AlastriaCredentialRegistry public alastriaCredentialRegistry;
     AlastriaPresentationRegistry public alastriaPresentationRegistry;
     AlastriaPublicKeyRegistry public alastriaPublicKeyRegistry;
+    address public firstIdentityWallet; 
     mapping(address => address) public identityKeys; //change to alastriaID created check bool
     mapping(address => uint) public pendingIDs;
 
@@ -41,6 +41,11 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
         _;
     }
 
+    modifier onlyFirstIdentity(address addr) { 
+        require(addr == firstIdentityWallet);
+        _;
+    }
+
     //Constructor
     function initialize (address _credentialRegistry, address _publicKeyRegistry, address _presentationRegistry, address _firstIdentityWallet) public initializer {
         //TODO require(_version > getPreviousVersion(_previousVersion));
@@ -49,6 +54,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
         alastriaPublicKeyRegistry = AlastriaPublicKeyRegistry(_publicKeyRegistry);
         AlastriaProxy identity = new AlastriaProxy();
         identityKeys[_firstIdentityWallet] = address(identity);
+        firstIdentityWallet = address(identity);
         AlastriaIdentityServiceProvider._initialize(address(identity));
         AlastriaIdentityIssuer._initialize(address(identity));
     }
@@ -80,7 +86,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
         return result;
     }
 
-    function recoverAccount(address accountLost, address newAccount) public onlyIdentityIssuer(msg.sender) {
+    function recoverAccount(address accountLost, address newAccount) public onlyFirstIdentity(msg.sender) {
         identityKeys[newAccount] = identityKeys[accountLost];
         identityKeys[accountLost] = address(0);
         emit IdentityRecovered(accountLost,newAccount,msg.sender);
