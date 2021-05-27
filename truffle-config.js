@@ -82,15 +82,15 @@ module.exports = {
       provider: () => {
         return new HDWalletProvider(adminKey, bNetworkNode);
       },
-      network_id: "*",
+      network_id: "2020",
     },
-    // Alastria red T connection with provider
+    // Alastria red B connection with provider
     'red-b-first-id': {
       gasPrice: 0x0,
       provider: () => {
         return new HDWalletProvider(firstIdKey, bNetworkNode);
       },
-      network_id: "*",
+      network_id: "2020",
     }
   },
 
