@@ -38,7 +38,7 @@ The previous contracts use some libraries which are:
 
 Let's allow connection from truffle to AlastriaT / AlastriaB networks.
 
-*Note*: Please, keep in mind that connections to this ports should be controled by `nginx` or any kind of `firewall`.
+*Note*: Please, keep in mind that connections to this ports should be controled in aplication or connection layer, using `nginx` or a `firewall`.
 
 ## AlastriaT
 
@@ -51,7 +51,7 @@ Enable de following args in `geth` command line:
 
 ## AlastriaB
 
-Enable the RPC connections from truffle:
+Enable the RPC connections from `truffle`, upgrading default configuration in `config.toml`:
 ```
 [...]
 rpc-http-api=["ADMIN","ETH","NET","WEB3"]
