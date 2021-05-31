@@ -11,3 +11,6 @@ build/
 package-lock.json
 
 **/artifacts/
+
+#
+.secret
