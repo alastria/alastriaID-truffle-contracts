@@ -66,5 +66,5 @@ module.exports = async function (callback) {
   }
 
   console.log('Contracts initialized');
-  callback(null);
+  // callback(null);
 };

@@ -22,12 +22,14 @@ const HDWalletProvider = require("@truffle/hdwallet-provider");
 const fs = require("fs");
 const mnemonic = fs.readFileSync(".secret").toString().trim();
 
+const keythereum = require('keythereum');
+
 // TODO: change to process.env
 const password = 'Passw0rd';
 const adminPath = './accounts/admin-6e3976aeaa3a59e4af51783cc46ee0ffabc5dc11';
 const firstId = './accounts/serviceProvider-643266eb3105f4bf8b4f4fec50886e453f0da9ad'
-const adminKey = keyethereum.recover(password, JSON.parse(fs.readFileSync(adminPath, 'utf8'))).toString('hex');
-const firstIdKey = keyethereum.recover(password, JSON.parse(fs.readFileSync(firstId, 'utf8'))).toString('hex');
+const adminKey = keythereum.recover(password, JSON.parse(fs.readFileSync(adminPath, 'utf8'))).toString('hex');
+const firstIdKey = keythereum.recover(password, JSON.parse(fs.readFileSync(firstId, 'utf8'))).toString('hex');
 
 const bNetworkNode = "http://63.33.206.111:8545";
 const tNetworkNode = "http://63.33.206.111/rpc";
