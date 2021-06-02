@@ -35,3 +35,10 @@ The previous contracts use some libraries which are:
 
 ## Deploy Contracts
 In this section it will be possible to see how to work with Smart Contracts in different environments which are: Remix, Ganache + Truffle and in a test environment
+
+### Remix
+To work with remix, first of all you need to have installed remixd in your system, for this, you have to write the following command:
+`` npm i -g @remix-project/remixd `` doing this you have remixd installed. Once is done you have to write the next command to run the daemon pointing to the directory where the smart contracts are: 
+``
+remixd -s /home/ubuntu/Escritorio/temp-alastriaID-truffle-contracts/contracts/ http://remix.ethereum.org
+``
