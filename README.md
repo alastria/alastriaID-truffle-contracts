@@ -60,3 +60,5 @@ setup notifications for /home/ubuntu/Escritorio/temp-alastriaID-truffle-contract
 ````
 As well of you click on the first icon where the smart contracts are, they will appear on this tab.
 ![Remix Contracts](https://github.com/cmoralesdiego/images/blob/main/CaptureContracts.JPG)
+
+Then you can work with the Smart Contracts, deploying firstly AlastriaIdentityManager
