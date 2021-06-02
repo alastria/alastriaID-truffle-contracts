@@ -58,3 +58,5 @@ Wed Jun 02 2021 16:29:18 GMT+0200 (GMT+02:00) remixd is listening on 127.0.0.1:6
 setup notifications for /home/ubuntu/Escritorio/temp-alastriaID-truffle-contracts/contracts/
 
 ````
+As well of you click on the first icon where the smart contracts are, they will appear on this tab.
+![Remix Contracts](https://github.com/cmoralesdiego/images/blob/main/CaptureContracts.JPG)
