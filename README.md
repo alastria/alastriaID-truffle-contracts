@@ -42,3 +42,19 @@ To work with remix, first of all you need to have installed remixd in your syste
 ``
 remixd -s /home/ubuntu/Escritorio/temp-alastriaID-truffle-contracts/contracts/ http://remix.ethereum.org
 ``
+Once it is done the previous step, in your browser you have to type remix.ethereum.org and you have to connect the Remixd plugin
+
+![Remixd Plugin](https://github.com/cmoralesdiego/images/blob/main/CaptureRemixdplugin.JPG)
+
+Done this step, you have to verify if in your console appears remix logs like this ones
+
+````
+[WARN] You can only connect to remixd from one of the supported origins.
+[WARN] Any application that runs on your computer can potentially read from and write to all files in the directory.
+[WARN] Symbolic links are not forwarded to Remix IDE
+
+Wed Jun 02 2021 16:29:18 GMT+0200 (GMT+02:00) remixd is listening on 127.0.0.1:65520
+[WARN] You may now only use IDE at http://remix.ethereum.org to connect to that instance
+setup notifications for /home/ubuntu/Escritorio/temp-alastriaID-truffle-contracts/contracts/
+
+````
