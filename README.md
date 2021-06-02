@@ -33,3 +33,5 @@ The previous contracts use some libraries which are:
 |Eidas.sol|	It manages Eidas level of assurance for credentials |
 |Owned.sol|	It assures that just the account which deployed a contract can update the version |
 
+## Deploy Contracts
+In this section it will be possible to see how to work with Smart Contracts in different environments which are: Remix, Ganache + Truffle and in a test environment
