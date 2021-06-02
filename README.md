@@ -62,3 +62,7 @@ As well of you click on the first icon where the smart contracts are, they will 
 ![Remix Contracts](https://github.com/cmoralesdiego/images/blob/main/CaptureContracts.JPG)
 
 Then you can work with the Smart Contracts, deploying firstly AlastriaIdentityManager
+
+### Ganache + Truffle
+If you want to work with Ganache and truffle. After installing them, you need to have the ganache configured as if you are in the Alastria Network, for this you need to configure the ganache in this way
+![Ganache config](https://github.com/cmoralesdiego/images/blob/main/CaptureGanache.JPG)
