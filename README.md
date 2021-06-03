@@ -34,9 +34,11 @@ The previous contracts use some libraries which are:
 |Owned.sol|	It assures that just the account which deployed a contract can update the version |
 
 ## Deploy Contracts
-In this section it will be possible to see how to work with Smart Contracts in different environments which are: Remix, Ganache + Truffle and in a test environment
+In this section it will be possible to see how to work with Smart Contracts in different environments which are: Remix, Ganache + Truffle and in a test environment. It will be explained for cases where you want to use your own scripts and in case you want to use the scripts you can find in the package.json file
 
-### Remix
+### Own Scripts
+
+#### Remix
 To work with remix, first of all you need to have installed remixd in your system, for this, you have to write the following command:
 `` npm i -g @remix-project/remixd `` doing this you have remixd installed. Once is done you have to write the next command to run the daemon pointing to the directory where the smart contracts are: 
 ``
@@ -63,6 +65,28 @@ As well of you click on the first icon where the smart contracts are, they will 
 
 Then you can work with the Smart Contracts, deploying firstly AlastriaIdentityManager
 
-### Ganache + Truffle
+#### Ganache + Truffle
 If you want to work with Ganache and truffle. After installing them, you need to have the ganache configured as if you are in the Alastria Network, for this you need to configure the ganache in this way
 ![Ganache config](https://github.com/cmoralesdiego/images/blob/main/CaptureGanache.JPG)
+
+### Repository Scripts
+This repository has in package.json some scripts which are very useful in case you don't want to loose time installing things, but it is important to have installed docker in your system.
+
+To install all content from package.json, inside the repo, just ``run npm i`` , once it is executed you can run the following scripts through npm run command
+**test**
+**coverage**
+**compile**
+**migrateToRed**
+**initRedT**
+**deployAnsRedT**
+**updateRedT**
+**migrateToRedB**
+**initRedB**
+**deployAnsLocal**
+**updateLocal**
+**lint**
+**remixd**
+**dockerTestnetRun**
+**dockerTestnetStop**
+**dockerTestnerLogs**
+**dockerTestnetConsole**
