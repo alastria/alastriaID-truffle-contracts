@@ -72,21 +72,21 @@ If you want to work with Ganache and truffle. After installing them, you need to
 ### Repository Scripts
 This repository has in package.json some scripts which are very useful in case you don't want to loose time installing things, but it is important to have installed docker in your system.
 
-To install all content from package.json, inside the repo, just ``run npm i`` , once it is executed you can run the following scripts through npm run command
-**test**
-**coverage**
-**compile**
-**migrateToRed**
-**initRedT**
-**deployAnsRedT**
-**updateRedT**
-**migrateToRedB**
-**initRedB**
-**deployAnsLocal**
-**updateLocal**
-**lint**
-**remixd**
-**dockerTestnetRun**
-**dockerTestnetStop**
-**dockerTestnerLogs**
-**dockerTestnetConsole**
+To install all content from package.json, inside the repo, just ``run npm i`` , once it is executed you can run the following scripts through npm run command:  
+**test**: To test contracts  
+**coverage**:To run the script coverage-verify which checks the coverage of the Smart Contracts  
+**compile**: To compole the Smart Contracts  
+**migrateToRedT** : To run the first three migrations in T network  
+**initRedT** : To initialize the Smart Contracts in T network  
+**deployAnsRedT**: To run migration related to AlastriaNameService in T network  
+**updateRedT**: To make upgradeables Smart Contracts from T network  
+**migrateToRedB**: To run the first three migrations in Besu Network  
+**initRedB**  To initialize the Smart Contracts in B network
+**deployAnsLocal**:To run migration related to AlastriaNameService in local network  
+**updateLocal**: To make upgradeables Smart Contracts from T network    
+**lint**: Linter to identify and fix Style & Security issues in Solidity   
+**remixd**: To run remixd and run contracts in Remix  
+**dockerTestnetRun**: Run docker with ethereum node in port 8545  
+**dockerTestnetStop**: Stop and remove docker with ethereum node  
+**dockerTestnerLogs**: Get logs from docker with ethereum node  
+**dockerTestnetConsole**: Go inside docker to make an attachment and work with geth console.  
