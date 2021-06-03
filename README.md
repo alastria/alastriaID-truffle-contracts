@@ -81,7 +81,7 @@ To install all content from package.json, inside the repo, just ``run npm i`` , 
 **deployAnsRedT**: To run migration related to AlastriaNameService in T network  
 **updateRedT**: To make upgradeables Smart Contracts from T network  
 **migrateToRedB**: To run the first three migrations in Besu Network  
-**initRedB**  To initialize the Smart Contracts in B network
+**initRedB**  To initialize the Smart Contracts in B network  
 **deployAnsLocal**:To run migration related to AlastriaNameService in local network  
 **updateLocal**: To make upgradeables Smart Contracts from T network    
 **lint**: Linter to identify and fix Style & Security issues in Solidity   
