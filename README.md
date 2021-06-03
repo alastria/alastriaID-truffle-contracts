@@ -72,7 +72,7 @@ If you want to work with Ganache and truffle. After installing them, you need to
 ### Repository Scripts
 This repository has in package.json some scripts which are very useful in case you don't want to loose time installing things, but it is important to have installed docker in your system.
 
-To install all content from package.json, inside the repo, just ``run npm i`` , once it is executed you can run the following scripts through npm run command:  
+To install all content from package.json, inside the repo, just run ``npm i`` , once it is executed you can run the following scripts through npm run command:  
 **test**: To test contracts  
 **coverage**:To run the script coverage-verify which checks the coverage of the Smart Contracts  
 **compile**: To compole the Smart Contracts  
