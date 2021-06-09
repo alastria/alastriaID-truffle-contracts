@@ -91,4 +91,4 @@ To install all content from package.json, inside the repo, just run ``npm i`` , 
 **dockerTestnerLogs**: Get logs from docker with ethereum node  
 **dockerTestnetConsole**: Go inside docker to make an attachment and work with geth console.  
 
-As well after running the npm i, a version of truffle is installed. This one is the 5.1.53 and if you are a great Truffle supporter you can work with it to deploy the smart contracts.
+As well after running the npm i, a version of truffle is installed. This one is the **5.1.53** and if you are a great Truffle supporter you can work with it to deploy the smart contracts.
