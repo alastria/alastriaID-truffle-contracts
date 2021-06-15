@@ -98,3 +98,20 @@ To install all content from package.json, inside the repo, just run ``npm i`` , 
 **dockerTestnetConsole**: Go inside docker to make an attachment and work with geth console.  
 
 As well after running the npm i, a version of truffle is installed. This one is the **5.1.53** and if you are a great Truffle supporter you can work with it to deploy the smart contracts.
+
+### Configurations
+In order to run the project in different types of Network, there are some configurations to take into account. There are the following ones:  
+**Node in T Network has the following IP address**: **http://63.33.206.111/rpc**  
+**Node in B Network has the following IP address**: **http://63.33.206.111:8545**   
+Once it is know the previous aspects, in the truffle-config file there are some possibilities to deploy the Smart Contracts which are the next ones:  
+**local-admin**: Which work with the local network and the admin account  
+**local-first-id**: Which work with the local network and a service provider  
+**red-t-identity-admin**: Which works with the t-network node and the admin account  
+**red-t-first-id**: Which works with the t-network node and a service provider  
+**red-b-identity-admin**: Which works with the b-network node and the admin acount  
+**red-b-first-id**: Which works with the b-network node and a service provider  
+
+Both accounts are the following ones:  
+**firstIdentityWallet**: "0x643266eb3105f4bf8b4f4fec50886e453f0da9ad"  
+**adminAccount**: "0x6e3976aeaa3A59E4AF51783CC46EE0fFabC5DC11"  
+And their respective private keys are stored in the accounts folder
