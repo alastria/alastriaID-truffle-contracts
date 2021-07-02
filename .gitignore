@@ -12,5 +12,5 @@ package-lock.json
 
 **/artifacts/
 
-#
-.secret
+# SmartContract owner for AlastriaB Network
+# .secret
