@@ -89,6 +89,7 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
     * @dev This method helps to recover a lost account
     * @param accountLost lost account address
     * @param newAccount  new account address to be used
+    */
     function recoverAccount(address accountLost, address newAccount) public onlyFirstIdentity(msg.sender) {
         identityKeys[newAccount] = identityKeys[accountLost];
         identityKeys[accountLost] = address(0);
