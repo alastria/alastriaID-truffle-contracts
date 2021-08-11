@@ -1,3 +1,7 @@
+/*
+Is not a very depured script, it has been develop to be didactic
+*/
+
 const ethers = require('ethers')
 const fs = require('fs');
 const keythereum = require('keythereum');
@@ -178,11 +182,13 @@ let identityManagerContract;
 let newServiceProviderIdentityManagerContract;
 
 const createProvider = () => {
+  console.log('Instantiating provider');
   provider = new ethers.providers.JsonRpcProvider("http://localhost:8545");
 }
 
 // wallets
 const instanciateFirstIdentityWallet = async () => {
+  console.log('Instantiating first identity');
   const password = 'Passw0rd';
   firstIdWallet = JSON.parse(fs.readFileSync(firstId, 'utf8'))
   const firstIdKey = keythereum.recover(password, JSON.parse(fs.readFileSync(firstId, 'utf8'))).toString('hex');
@@ -190,20 +196,24 @@ const instanciateFirstIdentityWallet = async () => {
 }
 
 const instanciateNewIdentityWallet = async (privateKey) => {
+  console.log(`Instantiating wallet based in key provided: ${processs.env.KEY}`);
   newServiceProviderWallet = new ethers.Wallet(privateKey, provider);
 }
 
 // contracts
 const instanciateFirstIdentityContract =  () => {
+  console.log('Instantiating identity manager for first id wallet');
   identityManagerContract = new ethers.Contract(identityManagerContractAddress, reducedAbi, firstIdWallet);
 }
 
 const instanciateNewIdentityContract =  () => {
+  console.log('Instantiating identity manager for new identity wallet');
   newServiceProviderIdentityManagerContract = new ethers.Contract(identityManagerContractAddress, reducedAbi, newServiceProviderWallet);
 }
 
 // did
 const getDid = async (address) => {
+  console.log('Recovering did from new identity');
   const did = await identityManagerContract.identityKeys(address)
   console.log(did)
   return did
@@ -211,18 +221,21 @@ const getDid = async (address) => {
 
 // is ID provider
 const isIdentityServiceProvider = async (address) => {
+  console.log('Checking service provider for new identity');
   const result = await identityManagerContract.isIdentityServiceProvider(address)
   console.log(result)
 }
 
 // is ID issuer
 const isIdentityIssuer = async (address) => {
+  console.log('Checking issuer for new identity');
   const result = await identityManagerContract.isIdentityIssuer(address)
   console.log(result)
 }
 
 // prepare alastria ID
 const delegatePrepareAlastriaID = async (address) => {
+  console.log('Sending delegated call');
   const result = await identityManagerContract.delegateCall(
     identityManagerContractAddress,
     0,
@@ -240,7 +253,7 @@ const prepareAlastriaID = async (address) => {
 
 // create Alastria ID
 const createAlastriaIdentity = async (publicKey) => {
-
+  console.log('Sending create id transaction');
   const result = await newServiceProviderIdentityManagerContract.createAlastriaIdentity(generatePublicKeyCallData(publicKey));
   console.log('esperando confirmaciones')
   await result.wait(2)
@@ -292,6 +305,7 @@ const generateCreateIdentiytyCallData = (publicKey) => {
 
 // addIdentityServiceProvider 
 const delegateAddIdentityServiceProvider = async (did) => {
+  console.log('Sending delegated call');
   const result = await identityManagerContract.delegateCall(
     identityManagerContractAddress,
     0,
@@ -309,6 +323,7 @@ const addIdentityServiceProvider = async (did) => {
 
 // addIdentityIssuer
 const delegateAddIdentityIssuer = async (did, eidasLevel) => {
+  console.log('Sending delegated call');
   const result = await identityManagerContract.delegateCall(
     identityManagerContractAddress,
     0,
