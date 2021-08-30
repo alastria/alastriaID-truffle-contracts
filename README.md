@@ -82,14 +82,20 @@ To install all content from package.json, inside the repo, just run ``npm i`` , 
 **test**: To test contracts  
 **coverage**:To run the script coverage-verify which checks the coverage of the Smart Contracts  
 **compile**: To compole the Smart Contracts  
-**migrateToRedT** : To run the first three migrations in T network  
-**initRedT** : To initialize the Smart Contracts in T network  
-**deployAnsRedT**: To run migration related to AlastriaNameService in T network  
-**updateRedT**: To make upgradeables Smart Contracts from T network  
-**migrateToRedB**: To run the first three migrations in Besu Network  
-**initRedB**  To initialize the Smart Contracts in B network  
-**deployAnsLocal**:To run migration related to AlastriaNameService in local network  
-**updateLocal**: To make upgradeables Smart Contracts from T network    
+**migrateToRedT** : To run the first three migrations in T network. The first three consist on:  
+  - 1_initial_migration.js which is the initial one which is deployed in all projects which are used with Truffle
+  - 2_deploy_libraries.js which is used to deploy Eidas.sol
+  - 3_deploy_aid_contracts.js which is used to deploy all aid Smart Contracts and safe the addresses of the Smart Contracts on file addresses.json
+**initRedT** : To initialize the Smart Contracts in T network. All of them are initialized with 0x0000000000000000000000000000000000000001. For this, it is used the migration called 4_initialize_contracts.js  
+**deployAnsRedT**: To run migration related to AlastriaNameService in T network. With it, you will be able to generate the proxy address and add the first Entity. For this, it is used the migration called 5_deploy_ans_contracts.js
+**updateRedT**: To make upgradeables Smart Contracts from T network. For this, it is used the migration called 6_update_logic.js  
+**migrateToRedB**: To run the first three migrations in Besu network. The first three consist on:  
+  - 1_initial_migration.js which is the initial one which is deployed in all projects which are used with Truffle
+  - 2_deploy_libraries.js which is used to deploy Eidas.sol
+  - 3_deploy_aid_contracts.js which is used to deploy all aid Smart Contracts and safe the addresses of the Smart Contracts on file addresses.json  
+**initRedB**  To initialize the Smart Contracts in B network. All of them are initialized with 0x0000000000000000000000000000000000000001. For this, it is used the migration called 4_initialize_contracts.js  
+**deployAnsLocal**:To run migration related to AlastriaNameService in local network. With it, you will be able to generate the proxy address and add the first Entity. For this, it is used the migration called 5_deploy_ans_contracts.js  
+**updateLocal**: To make upgradeables Smart Contracts from Local network. For this, it is used the migration called 6_update_logic.js    
 **lint**: Linter to identify and fix Style & Security issues in Solidity   
 **remixd**: To run remixd and run contracts in Remix  
 **dockerTestnetRun**: Run docker with ethereum node in port 8545  
