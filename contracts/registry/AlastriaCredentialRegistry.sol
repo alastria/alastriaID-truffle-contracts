@@ -63,19 +63,32 @@ contract AlastriaCredentialRegistry is Initializable {
         version = 3;
         previousPublishedVersion = _previousPublishedVersion;
     }
-
+    
+    /*
+    * @dev Function to add Credentials to the Subject
+    * @param subjectCredentialHash Hash of the credential to add
+    * @param URI Uri of the Subject
+    */
     function addSubjectCredential(bytes32 subjectCredentialHash, string memory URI) public {
         require(!subjectCredentialRegistry[msg.sender][subjectCredentialHash].exists);
         subjectCredentialRegistry[msg.sender][subjectCredentialHash] = SubjectCredential(true, Status.Valid, URI);
         subjectCredentialList[msg.sender].push(subjectCredentialHash);
     }
-
+    
+    /*
+    * @dev Function to add Credentials to the issuer
+    * @param issuerCredentialHash Hash of the Credential
+    */
     function addIssuerCredential(bytes32 issuerCredentialHash) public {
         require(!issuerCredentialRegistry[msg.sender][issuerCredentialHash].exists);
         issuerCredentialRegistry[msg.sender][issuerCredentialHash] = IssuerCredential(true, Status.Valid);
         issuerCredentialList[msg.sender].push(issuerCredentialHash);
     }
 
+    /*
+    * @dev Function to remove credentials from subject
+    * @param subjectCredentialHash hash of the credential to be removed
+    */
     function deleteSubjectCredential(bytes32 subjectCredentialHash) public {
         SubjectCredential storage value = subjectCredentialRegistry[msg.sender][subjectCredentialHash];
         // only existent
@@ -85,8 +98,11 @@ contract AlastriaCredentialRegistry is Initializable {
         }
     }
 
-    // If the credential does not exists the return is a void credential
-    // If we want a log, should we add an event?
+   /*
+    * @dev Function to get the status of a Credential
+    * @param subject address of the subject which owns the credential
+    * @param subjectCredentialHash hash of the credential
+    */
     function getSubjectCredentialStatus(address subject, bytes32 subjectCredentialHash) view public validAddress(subject) returns (bool exists, Status status) {
         SubjectCredential storage value = subjectCredentialRegistry[subject][subjectCredentialHash];
         return (value.exists, value.status);
