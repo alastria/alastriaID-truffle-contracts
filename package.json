@@ -27,7 +27,8 @@
     "dockerTestnetRun": "docker run --name geth-node -d -p 8545:8545 ethereum/client-go --dev --rpc",
     "dockerTestnetStop": "docker rm geth-node",
     "dockerTestnetLogs": "docker logs geth-node --tail 40 -f",
-    "dockerTestnetConsole": "docker exec -it geth-node geth attach /tmp/geth.ipc"
+    "dockerTestnetConsole": "docker exec -it geth-node geth attach /tmp/geth.ipc",
+    "addServiceProvider": "node ./scripts/addServiceProvider.js"
   },
   "author": "Alastria",
   "license": "MIT",
@@ -36,6 +37,7 @@
     "@truffle/hdwallet-provider": "1.1.1",
     "keythereum": "1.2.0",
     "remixd": "0.2.4-alpha.0",
+    "ethers": "5.4.3",
     "truffle": "5.1.53"
   }
 }
