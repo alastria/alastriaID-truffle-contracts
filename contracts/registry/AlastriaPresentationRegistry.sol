@@ -112,17 +112,23 @@ contract AlastriaPresentationRegistry is Initializable {
         return (subjectPresentationListRegistry[subject].length, subjectPresentationListRegistry[subject]);
     }
 
-    //
     //Receiver functions
     function updateReceiverPresentation(bytes32 receiverPresentationHash, Status status) public validStatus(status) {
-        ReceiverPresentation storage value = receiverPresentationRegistry[msg.sender][receiverPresentationHash];
-        // No previous existence required. Check backward transition
-        if (!backTransitionsAllowed && status <= value.status) {
-            return;
-        }
+        // Check valid status
         if (receiverAllowed[uint(status)]) {
-            value.exists = true;
-            value.status = status;
+            ReceiverPresentation storage value = receiverPresentationRegistry[msg.sender][receiverPresentationHash];
+            // If it does not exist, we create a new entry
+            if (!value.exists) {
+                receiverPresentationRegistry[msg.sender][receiverPresentationHash] = ReceiverPresentation(true, status);
+            }
+            // Check backward transition
+            else if (!backTransitionsAllowed && status <= value.status) {
+                return;
+            }
+            // Or update status
+            else {
+                value.status = status;
+            }
             emit PresentationUpdated(receiverPresentationHash, status);
         }
     }
