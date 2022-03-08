@@ -32,7 +32,7 @@
     "dockerTestnetRun": "docker run --name geth-node -d -p 8545:8545 ethereum/client-go --dev --http",
     "dockerTestnetStop": "docker rm geth-node",
     "dockerTestnetLogs": "docker logs geth-node --tail 40 -f",
-    "dockerTestnetConsole": "docker exec -it ethereum-node geth attach /tmp/geth.ipc"
+    "dockerTestnetConsole": "docker exec -it geth-node geth attach /tmp/geth.ipc"
   },
   "author": "Alastria",
   "license": "MIT",
