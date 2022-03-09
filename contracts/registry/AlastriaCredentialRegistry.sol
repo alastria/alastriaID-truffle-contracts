@@ -27,6 +27,9 @@ contract AlastriaCredentialRegistry is Initializable {
         bool exists;
         Status status;
         string URI;
+        /*URI refers to a possible location of the Credential for backup purposes. 
+         * It can be empty and it is not recommended that it can point to personal 
+         * data that is not properly protected, due to GDPR issues.*/
     }
 
     // Mapping subject, hash (JSON credential)

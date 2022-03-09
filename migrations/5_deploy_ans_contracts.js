@@ -32,7 +32,6 @@ module.exports = async function (deployer, network, accounts) {
         let proxyFirstIdentityWallet = await identityManager.identityKeys(config.firstIdentityWallet, 
             {from: config.firstIdentityWallet});
 
-        console.log('proxy first identity wallet:', proxyFirstIdentityWallet);
         
         const nameService = await deployer.deploy(AlastriaNameService, proxyFirstIdentityWallet);
 

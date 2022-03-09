@@ -17,26 +17,12 @@ contract AlastriaPresentationRegistry is Initializable {
     int public version;
     address public previousPublishedVersion;
 
-
     // Status definition, should be moved to a Library.
     enum Status {Valid, Received, AskDeletion, DeletionConfirmation}
     Status constant STATUS_FIRST = Status.Valid;
     Status constant STATUS_LAST = Status.DeletionConfirmation;
-    int constant STATUS_SIZE = 4;
-    bool[STATUS_SIZE] subjectAllowed = [
-        true,
-        false,
-        true,
-        false
-    ];
-    bool[STATUS_SIZE] receiverAllowed = [
-        false,
-        true,
-        false,
-        true
-    ];
-    bool backTransitionsAllowed = false;
 
+    bool backTransitionsAllowed = false;
 
     // Presentation: Initially set to Valid
     // Updates as allowed in *allow arrays
@@ -45,6 +31,7 @@ contract AlastriaPresentationRegistry is Initializable {
         Status status;
         string URI;
     }
+
     // Mapping subject, subjectPresentationHash (Complete JSON Presentation)
     mapping(address => mapping(bytes32 => SubjectPresentation)) public subjectPresentationRegistry;
     mapping(address => bytes32[]) public subjectPresentationListRegistry;
@@ -53,13 +40,12 @@ contract AlastriaPresentationRegistry is Initializable {
         bool exists;
         Status status;
     }
+
     // Mapping receiver, receiverPresentationHash (Complete JSON Presentation + PresentationSignature)
     mapping(address => mapping(bytes32 => ReceiverPresentation)) private receiverPresentationRegistry;
 
-
     // Events. Just for changes, not for initial set
     event PresentationUpdated (bytes32 hash, Status status);
-
 
     //Modifiers
     modifier validAddress(address addr) {//protects against some weird attacks
@@ -78,7 +64,15 @@ contract AlastriaPresentationRegistry is Initializable {
         previousPublishedVersion = _previousPublishedVersion;
     }
 
-    //
+    // Status validations
+    function getSubjectAllowed(Status status) private pure returns (bool){
+        return status == Status.Valid || status == Status.AskDeletion;
+    }
+
+    function getReceiverAllowed(Status status) private pure returns (bool){
+        return status == Status.Received || status == Status.DeletionConfirmation;
+    }
+
     //Subject functions
     function addSubjectPresentation(bytes32 subjectPresentationHash, string memory URI) public {
         require(!subjectPresentationRegistry[msg.sender][subjectPresentationHash].exists);
@@ -95,7 +89,7 @@ contract AlastriaPresentationRegistry is Initializable {
         if (!backTransitionsAllowed && status <= value.status) {
             return;
         }
-        if (subjectAllowed[uint(status)]) {
+        if (getSubjectAllowed(status)) {
             value.status = status;
             emit PresentationUpdated(subjectPresentationHash, status);
         }
@@ -112,17 +106,23 @@ contract AlastriaPresentationRegistry is Initializable {
         return (subjectPresentationListRegistry[subject].length, subjectPresentationListRegistry[subject]);
     }
 
-    //
     //Receiver functions
     function updateReceiverPresentation(bytes32 receiverPresentationHash, Status status) public validStatus(status) {
-        ReceiverPresentation storage value = receiverPresentationRegistry[msg.sender][receiverPresentationHash];
-        // No previous existence required. Check backward transition
-        if (!backTransitionsAllowed && status <= value.status) {
-            return;
-        }
-        if (receiverAllowed[uint(status)]) {
-            value.exists = true;
-            value.status = status;
+        // Check valid status
+        if (getReceiverAllowed(status)) {
+            ReceiverPresentation storage value = receiverPresentationRegistry[msg.sender][receiverPresentationHash];
+            // If it does not exist, we create a new entry
+            if (!value.exists) {
+                receiverPresentationRegistry[msg.sender][receiverPresentationHash] = ReceiverPresentation(true, status);
+            }
+            // Check backward transition
+            else if (!backTransitionsAllowed && status <= value.status) {
+                return;
+            }
+            // Or update status
+            else {
+                value.status = status;
+            }
             emit PresentationUpdated(receiverPresentationHash, status);
         }
     }
