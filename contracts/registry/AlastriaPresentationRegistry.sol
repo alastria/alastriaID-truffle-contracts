@@ -22,26 +22,27 @@ contract AlastriaPresentationRegistry is Initializable {
     Status constant STATUS_FIRST = Status.Valid;
     Status constant STATUS_LAST = Status.DeletionConfirmation;
 
-    bool backTransitionsAllowed = false;
+	// AlastriaID V2.1: Beware Open Zepelin does not support Global Variables, added Constant
+    bool constant backTransitionsAllowed = false;
 
-    // Presentation: Initially set to Valid
-    // Updates as allowed in *allow arrays
+    // Presentation Status
+    // Updates as allowed in *allow functions
     struct SubjectPresentation {
         bool exists;
         Status status;
-        string URI;
+        /*Deprecated string URI; */
     }
 
-    // Mapping subject, subjectPresentationHash (Complete JSON Presentation)
-    mapping(address => mapping(bytes32 => SubjectPresentation)) public subjectPresentationRegistry;
-    mapping(address => bytes32[]) public subjectPresentationListRegistry;
+    // Mapping subject, subjectPresentationHash (Complete JWT Presentation + subjectDID)
+    mapping(address => mapping(bytes32 => SubjectPresentation)) private subjectPresentationRegistry;
+    /*Deprecated mapping(address => bytes32[]) private subjectPresentationListRegistry; */
 
     struct ReceiverPresentation {
         bool exists;
         Status status;
     }
 
-    // Mapping receiver, receiverPresentationHash (Complete JSON Presentation + PresentationSignature)
+    // Mapping receiver, receiverPresentationHash (Complete JWT Presentation + ReceiverDID)
     mapping(address => mapping(bytes32 => ReceiverPresentation)) private receiverPresentationRegistry;
 
     // Events. Just for changes, not for initial set
@@ -74,23 +75,31 @@ contract AlastriaPresentationRegistry is Initializable {
     }
 
     //Subject functions
-    function addSubjectPresentation(bytes32 subjectPresentationHash, string memory URI) public {
+	//To be deprecated, please use only updateSubjectPresentation
+    function addSubjectPresentation(bytes32 subjectPresentationHash, string memory /*Deprecated parameter URI not used */) public {
         require(!subjectPresentationRegistry[msg.sender][subjectPresentationHash].exists);
-        subjectPresentationRegistry[msg.sender][subjectPresentationHash] = SubjectPresentation(true, Status.Valid, URI);
-        subjectPresentationListRegistry[msg.sender].push(subjectPresentationHash);
+        subjectPresentationRegistry[msg.sender][subjectPresentationHash] = SubjectPresentation(true, Status.Valid /*Deprecated, URI*/);
+        /*Deprecated subjectPresentationListRegistry[msg.sender].push(subjectPresentationHash); */
     }
 
+	// AlastriaID V2.1: removed restriction that the Presentation registry must exist before calling update
     function updateSubjectPresentation(bytes32 subjectPresentationHash, Status status) public validStatus(status) {
-        SubjectPresentation storage value = subjectPresentationRegistry[msg.sender][subjectPresentationHash];
-        // Check existence and backtransitions, should be requires?
-        if (!value.exists) {
-            return;
-        }
-        if (!backTransitionsAllowed && status <= value.status) {
-            return;
-        }
+        // Check valid status
         if (getSubjectAllowed(status)) {
-            value.status = status;
+            SubjectPresentation storage value = subjectPresentationRegistry[msg.sender][subjectPresentationHash];
+            // If it does not exist, we create a new entry
+            if (!value.exists) {
+                subjectPresentationRegistry[msg.sender][subjectPresentationHash] = SubjectPresentation(true, status /*Deprecated , ""*/);
+                /*Deprecated subjectPresentationListRegistry[msg.sender].push(subjectPresentationHash); */
+            }
+            // Check backward transition
+            else if (!backTransitionsAllowed && status <= value.status) {
+                return;
+            }
+            // Or update status
+            else {
+                value.status = status;
+            }
             emit PresentationUpdated(subjectPresentationHash, status);
         }
     }
@@ -102,9 +111,11 @@ contract AlastriaPresentationRegistry is Initializable {
         return (value.exists, value.status);
     }
 
+    /*Deprecated
     function getSubjectPresentationList(address subject) public view returns (uint, bytes32[] memory) {
         return (subjectPresentationListRegistry[subject].length, subjectPresentationListRegistry[subject]);
     }
+    */
 
     //Receiver functions
     function updateReceiverPresentation(bytes32 receiverPresentationHash, Status status) public validStatus(status) {
