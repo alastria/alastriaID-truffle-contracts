@@ -1,17 +1,30 @@
 pragma solidity 0.5.17;
 
-import "../openzeppelin/Initializable.sol";
-
+import "./openzeppelin/Initializable.sol";
 
 contract AlastriaPresentationRegistry is Initializable {
 
-    // Subject Presentation actions are registered under subjectPresentationHash = hash(Presentation)
+    /* Major updates in V2.1, in order to enhance privacy and allow for a smooth transition to V2.1 and future V2.2.
+
+    - addSubjectPresentation marked as To Be Deprecated for new version 2.2, but still available
+    - restriction in updateSubjectPresentation requiring previous call to addSubjectPresentation removed,
+      can anchor directly to any user valid State.
+    - Deprecated subjectPresentationListRegistry mapping and corresponding getter function getSubjectPresentationList
+      removed all wrrite and read access to subjectPresentationListRegistry mapping.
+    - Deprecated URI field in SubjectPresentations Struct.
+      The corresponding parameter in addSubjectPresentation is kept, but not used at all in the implementation.
+      The name of the parameter has been deprecated (commented out) to avoid Solidity compiler warnings about unused parameter.
+    */
+
+    // Subject Presentation actions are registered under subjectPresentationHash = hash(complete JWTPresentation & subjectDID)
     // in a (subject, subjectPresentationHash) mapping
     // Receiver (ussually a Service Provider) Presentation Actions are registered
-    // under receiverPresentationHash = hash(Presentations + PresentationSignature) in a (receiver, receiverPresentationHash) mapping
+    // under receiverPresentationHash = hash(complete JWTPresentation & receiverDID) in a (receiver, receiverPresentationHash) mapping
+
+    /* Deprecated
     // A List of Subject Presentation Hashes is gathered in a (subject) mapping
     // To Review: Subject Presentations  could be iterated instead of returned as an array
-
+    */
 
     // Variables
     int public version;
@@ -22,7 +35,7 @@ contract AlastriaPresentationRegistry is Initializable {
     Status constant STATUS_FIRST = Status.Valid;
     Status constant STATUS_LAST = Status.DeletionConfirmation;
 
-	// AlastriaID V2.1: Beware Open Zepelin does not support Global Variables, added Constant
+	// AlastriaID V2.1: Beware Open Zepelin does not support Global Variables, added Constant 
     bool constant backTransitionsAllowed = false;
 
     // Presentation Status
@@ -75,7 +88,7 @@ contract AlastriaPresentationRegistry is Initializable {
     }
 
     //Subject functions
-	//To be deprecated, please use only updateSubjectPresentation
+	//To be deprecated, please use only new updateSubjectPresentation
     function addSubjectPresentation(bytes32 subjectPresentationHash, string memory /*Deprecated parameter URI not used */) public {
         require(!subjectPresentationRegistry[msg.sender][subjectPresentationHash].exists);
         subjectPresentationRegistry[msg.sender][subjectPresentationHash] = SubjectPresentation(true, Status.Valid /*Deprecated, URI*/);
@@ -91,16 +104,13 @@ contract AlastriaPresentationRegistry is Initializable {
             if (!value.exists) {
                 subjectPresentationRegistry[msg.sender][subjectPresentationHash] = SubjectPresentation(true, status /*Deprecated , ""*/);
                 /*Deprecated subjectPresentationListRegistry[msg.sender].push(subjectPresentationHash); */
+                emit PresentationUpdated(subjectPresentationHash, status);
             }
-            // Check backward transition
-            else if (!backTransitionsAllowed && status <= value.status) {
-                return;
-            }
-            // Or update status
-            else {
+            // if backward transition allowed or new status higher than previous status, update entry in the mapping
+            else if (backTransitionsAllowed || status > value.status) {
                 value.status = status;
+                emit PresentationUpdated(subjectPresentationHash, status);
             }
-            emit PresentationUpdated(subjectPresentationHash, status);
         }
     }
 
@@ -125,27 +135,24 @@ contract AlastriaPresentationRegistry is Initializable {
             // If it does not exist, we create a new entry
             if (!value.exists) {
                 receiverPresentationRegistry[msg.sender][receiverPresentationHash] = ReceiverPresentation(true, status);
+                emit PresentationUpdated(receiverPresentationHash, status);
             }
-            // Check backward transition
-            else if (!backTransitionsAllowed && status <= value.status) {
-                return;
-            }
-            // Or update status
-            else {
+            // if backward transition allowed or new status higher than previous status, update entry in the mapping
+            else if (backTransitionsAllowed || status > value.status) {
                 value.status = status;
+                emit PresentationUpdated(receiverPresentationHash, status);
             }
-            emit PresentationUpdated(receiverPresentationHash, status);
         }
     }
 
     // If the Presentation does not exists the return is a void Presentation
-    // If we want a log, should we add an event?
     function getReceiverPresentationStatus(address receiver, bytes32 receiverPresentationHash) view public validAddress(receiver) returns (bool exists, Status status) {
         ReceiverPresentation storage value = receiverPresentationRegistry[receiver][receiverPresentationHash];
         return (value.exists, value.status);
     }
 
-    // Utility function
+    // Utility function. To be deprecated. 
+    // This utility function combining two status should be implemented in the library and not in a smart contracts
     // Defining three status functions avoids linking the Subject to the Receiver or the corresponding hashes
     function getPresentationStatus(Status subjectStatus, Status receiverStatus) pure public validStatus(subjectStatus) validStatus(receiverStatus) returns (Status){
         if (subjectStatus >= receiverStatus) {
