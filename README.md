@@ -124,3 +124,38 @@ Both accounts are the following ones:
 - **firstIdentityWallet**: `0x643266eb3105f4bf8b4f4fec50886e453f0da9ad`  
 - **adminAccount**: `0x6e3976aeaa3A59E4AF51783CC46EE0fFabC5DC11`  
 _Their respective private keys are stored in the accounts folder_
+
+## HowTo
+
+1. Deployment of contracts in T network
+
+* Clone repo:
+```
+$ git@github.com:alastria/alastriaID-truffle-contracts.git
+```
+* Deploy Contracts: 
+```
+$ npm run migrateToRedT
+```
+* Initialize Contracts and create the first DID, Issuer and SP
+```
+$ npm run initRedT
+```
+* Deploy and initialize the AlastriaNameService contract
+```
+$ npm run deployAnsRedT
+```
+
+As result, we have the new blockchain address in `address.json`, and we should use it in the following examples
+
+2. Running examples:
+
+We modify `node_modules/alastria-identity-lib/dist/config.js` with the new addresses in `address.json
+
+3. Update of the contract
+
+We change logic (e.g. `getCurrentPublicKey()` function) and run again `npm run updateRedT`
+
+4. Test data persistence
+
+Make calls to `examples/` to check the data persistence.
