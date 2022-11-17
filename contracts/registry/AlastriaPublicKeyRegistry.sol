@@ -26,10 +26,13 @@ contract AlastriaPublicKeyRegistry is Initializable{
     mapping(address => mapping(bytes32 => PublicKey)) private publicKeyRegistry;
     // mapping subject => publickey
     mapping(address => string[]) public publicKeyList;
+    mapping(address => bytes32[]) public publicKeyHashList;
 
     //Events, just for revocation and deletion
     event PublicKeyDeleted (string publicKey);
     event PublicKeyRevoked (string publicKey);
+    event PublicKeyHashRevoked (bytes32 publicKeyHash);
+    event PublicKeyHashDeleted (bytes32 publicKeyHash);
 
     //Modifiers
     modifier validAddress(address addr) {//protects against some weird attacks
@@ -56,12 +59,33 @@ contract AlastriaPublicKeyRegistry is Initializable{
         publicKeyList[msg.sender].push(publicKey);
     }
 
+    function addPublicKeyHash(bytes32 publicKeyHash) public {
+        require(!publicKeyRegistry[msg.sender][publicKeyHash].exists);
+        uint changeDate = now;
+        revokePublicKeyHash(getCurrentPublicKeyHash(msg.sender));
+        publicKeyRegistry[msg.sender][publicKeyHash] = PublicKey(
+            true, 
+            Status.Valid,
+            changeDate,
+            0
+        );
+        publicKeyHashList[msg.sender].push(publicKeyHash);
+    }
+
     function revokePublicKey(string memory publicKey) public {
         PublicKey storage value = publicKeyRegistry[msg.sender][getKeyHash(publicKey)];
         // only existent no backtransition
         if (value.exists && value.status != Status.DeletedBySubject) {
             value.endDate = now;
             emit PublicKeyRevoked(publicKey);
+        }
+    }
+
+    function revokePublicKeyHash(bytes32 publicKeyHash) public {
+        PublicKey storage value = publicKeyRegistry[msg.sender][publicKeyHash];
+        if (value.exists && value.status != Status.DeletedBySubject) {
+            value.endDate = now;
+            emit PublicKeyHashRevoked(publicKeyHash);
         }
     }
 
@@ -75,11 +99,28 @@ contract AlastriaPublicKeyRegistry is Initializable{
         }
     }
 
+    function deletePublicKeyHash(bytes32 publicKeyHash) public {
+        PublicKey storage value = publicKeyRegistry[msg.sender][publicKeyHash];
+        if (value.exists) {
+            value.status = Status.DeletedBySubject;
+            value.endDate = now;
+            emit PublicKeyHashDeleted(publicKeyHash);
+        }
+    }
+
     function getCurrentPublicKey(address subject) view public validAddress(subject) returns (string memory) {
         if (publicKeyList[subject].length > 0) {
             return publicKeyList[subject][publicKeyList[subject].length - 1];
         } else {
             return "";
+        }
+    }
+
+    function getCurrentPublicKeyHash(address subject) view public validAddress(subject) returns (bytes32) {
+        if (publicKeyHashList[subject].length > 0) {
+            return publicKeyHashList[subject][publicKeyHashList[subject].length - 1];
+        } else {
+            return 0;
         }
     }
 

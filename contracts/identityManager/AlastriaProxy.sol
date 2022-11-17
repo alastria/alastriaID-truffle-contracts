@@ -26,4 +26,15 @@ contract AlastriaProxy is Owned {
         emit Forwarded(destination, value, data, result);
         return result;
     }
+
+    function forward(
+        address destination,
+        uint256 value,
+        bytes32 data
+    ) public onlyOwner returns(bytes32) {
+        (bool ret, bytes32 result) = destination.call.value(value)(data);
+        require(ret);
+        emit Forwarded(destination, value, data, result);
+        return result;
+    }
 }
