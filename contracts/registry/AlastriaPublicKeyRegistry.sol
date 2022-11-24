@@ -5,6 +5,14 @@ import "../openzeppelin/Initializable.sol";
 
 contract AlastriaPublicKeyRegistry is Initializable{
 
+    /*Major updates in V2.2.
+
+    - addPublicKeyHash is a new function for registry a new public key through its hash,  in addition 
+      the automatic revocation has been eliminated, now the user must do it.
+    - revokePublicKey and deletePublicKey function can be called from the public key and through the hash of the public key.
+    - PublicKeyRevoked and PublicKeyDeleted events can be called from the public key and through the hash of the public key.
+    */
+
     // This contracts registers and makes publicly avalaible the AlastriaID Public Keys hash and status, current and past.
 
     //To Do: Should we add RevokedBySubject Status?
@@ -26,13 +34,12 @@ contract AlastriaPublicKeyRegistry is Initializable{
     mapping(address => mapping(bytes32 => PublicKey)) private publicKeyRegistry;
     // mapping subject => publickey
     mapping(address => string[]) public publicKeyList;
-    mapping(address => bytes32[]) public publicKeyHashList;
 
     //Events, just for revocation and deletion
     event PublicKeyDeleted (string publicKey);
     event PublicKeyRevoked (string publicKey);
-    event PublicKeyHashRevoked (bytes32 publicKeyHash);
-    event PublicKeyHashDeleted (bytes32 publicKeyHash);
+    event PublicKeyRevoked (bytes32 publicKeyHash);
+    event PublicKeyDeleted (bytes32 publicKeyHash);
 
     //Modifiers
     modifier validAddress(address addr) {//protects against some weird attacks
@@ -62,14 +69,12 @@ contract AlastriaPublicKeyRegistry is Initializable{
     function addPublicKeyHash(bytes32 publicKeyHash) public {
         require(!publicKeyRegistry[msg.sender][publicKeyHash].exists);
         uint changeDate = now;
-        revokePublicKeyHash(getCurrentPublicKeyHash(msg.sender));
         publicKeyRegistry[msg.sender][publicKeyHash] = PublicKey(
             true, 
             Status.Valid,
             changeDate,
             0
         );
-        publicKeyHashList[msg.sender].push(publicKeyHash);
     }
 
     function revokePublicKey(string memory publicKey) public {
@@ -81,11 +86,11 @@ contract AlastriaPublicKeyRegistry is Initializable{
         }
     }
 
-    function revokePublicKeyHash(bytes32 publicKeyHash) public {
+    function revokePublicKey(bytes32 publicKeyHash) public {
         PublicKey storage value = publicKeyRegistry[msg.sender][publicKeyHash];
         if (value.exists && value.status != Status.DeletedBySubject) {
             value.endDate = now;
-            emit PublicKeyHashRevoked(publicKeyHash);
+            emit PublicKeyRevoked(publicKeyHash);
         }
     }
 
@@ -99,12 +104,12 @@ contract AlastriaPublicKeyRegistry is Initializable{
         }
     }
 
-    function deletePublicKeyHash(bytes32 publicKeyHash) public {
+    function deletePublicKey(bytes32 publicKeyHash) public {
         PublicKey storage value = publicKeyRegistry[msg.sender][publicKeyHash];
         if (value.exists) {
             value.status = Status.DeletedBySubject;
             value.endDate = now;
-            emit PublicKeyHashDeleted(publicKeyHash);
+            emit PublicKeyDeleted(publicKeyHash);
         }
     }
 
@@ -113,14 +118,6 @@ contract AlastriaPublicKeyRegistry is Initializable{
             return publicKeyList[subject][publicKeyList[subject].length - 1];
         } else {
             return "";
-        }
-    }
-
-    function getCurrentPublicKeyHash(address subject) view public validAddress(subject) returns (bytes32) {
-        if (publicKeyHashList[subject].length > 0) {
-            return publicKeyHashList[subject][publicKeyHashList[subject].length - 1];
-        } else {
-            return 0;
         }
     }
 
