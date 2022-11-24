@@ -80,11 +80,11 @@ contract AlastriaIdentityManager is AlastriaIdentityServiceProvider, AlastriaIde
         identity.forward(address(alastriaPublicKeyRegistry), 0, addPublicKeyCallData);//must be alastria registry call
     }
 
-    function createAlastriaIdentity(bytes32 memory addPublicKeyHashCallData) public validAddress(msg.sender) isPendingAndOnTime(msg.sender) {
+    function createAlastriaIdentity(bytes32 addPublicKeyHashCallData) public validAddress(msg.sender) isPendingAndOnTime(msg.sender) {
         AlastriaProxy identity = new AlastriaProxy();
         identityKeys[msg.sender] = address(identity);
         pendingIDs[msg.sender] = 0;
-        identity.forward(address(alastriaPublicKeyRegistry), 0, addPublicKeyHashCallData));
+        identity.forward(address(alastriaPublicKeyRegistry), 0, addPublicKeyHashCallData);
     }
 
    /*
