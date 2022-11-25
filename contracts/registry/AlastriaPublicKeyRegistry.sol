@@ -7,7 +7,7 @@ contract AlastriaPublicKeyRegistry is Initializable{
 
     /*Major updates in V2.2.
 
-    - addPublicKeyHash is a new function for registry a new public key through its hash,  in addition 
+    - addPublicKey is a new function for registry a new public key through its hash,  in addition 
       the automatic revocation has been eliminated, now the user must do it.
     - revokePublicKey and deletePublicKey function can be called from the public key and through the hash of the public key.
     - PublicKeyRevoked and PublicKeyDeleted events can be called from the public key and through the hash of the public key.
@@ -66,7 +66,7 @@ contract AlastriaPublicKeyRegistry is Initializable{
         publicKeyList[msg.sender].push(publicKey);
     }
 
-    function addPublicKeyHash(bytes32 publicKeyHash) public {
+    function addPublicKey(bytes32 publicKeyHash) public {
         require(!publicKeyRegistry[msg.sender][publicKeyHash].exists);
         uint changeDate = now;
         publicKeyRegistry[msg.sender][publicKeyHash] = PublicKey(
